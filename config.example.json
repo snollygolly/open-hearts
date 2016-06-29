@@ -1,0 +1,21 @@
+{
+  "site":{
+    "port": 2999,
+    "name": "OpenHearts",
+    "secret": "tricks-are-for-everyone",
+    "oauth": {
+      "host": "http://127.0.0.1",
+      "github": {
+        "clientID": "OAUTH CLIENT ID FOR GITHUB",
+        "clientSecret": "OAUTH CLIENT SECRET FOR GITHUB"
+      }
+    },
+    "analytics": "UA-00000000-0"
+  },
+  "deploy":{
+    "username": "YOUR USERNAME",
+    "hostname": "YOUR HOSTNAME",
+    "path": "~/OpenHearts",
+    "screen": "open-hearts"
+  }
+}
