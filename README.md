@@ -1,4 +1,4 @@
-# OpenHearts
+# :heart: OpenHearts [![Build Status](https://travis-ci.org/snollygolly/open-hearts.svg?branch=master)](https://travis-ci.org/snollygolly/open-hearts)
 An open source version of the card game Hearts.
 
 ## Prerequisites
