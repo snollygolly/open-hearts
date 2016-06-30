@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/mocha ./tests/",
+    "coverage": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha ./tests/"
   },
   "repository": {
     "type": "git",
@@ -36,6 +37,9 @@
     "passport-github": "^1.0.0"
   },
   "devDependencies": {
+    "chai": "^3.5.0",
+    "istanbul": "^0.4.4",
+    "mocha": "^2.5.3",
     "shipit-cli": "^1.4.1",
     "shipit-deploy": "^2.1.2"
   }
