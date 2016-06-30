@@ -1,8 +1,21 @@
 "use strict";
 
+/**
+ * Player Model
+ * In charge of all things dealing with the player object
+ *
+ */
+
 module.exports = {
+	/**
+	* newPlayer
+	* Creates a new player object and returns it
+	*
+	* @param {string} name - The name of the player to create
+	* @returns {object} player -  The player object
+	*/
 	newPlayer: (name) => {
-		return {
+		const player = {
 			// TODO: add an actual id
 			id: 0,
 			name: name,
@@ -10,5 +23,6 @@ module.exports = {
 			hand: [],
 			tricks: []
 		};
+		return player;
 	}
 };
