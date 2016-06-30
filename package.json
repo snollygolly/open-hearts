@@ -7,6 +7,8 @@
     "start": "node index.js",
     "test": "./node_modules/.bin/mocha ./tests/",
     "coverage": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha ./tests/"
+    "build": "browserify ./assets/js/src/scripts.js -o ./assets/js/scripts.min.js -t babelify",
+    "watch": "watchify ./assets/js/src/scripts.js -o ./assets/js/scripts.min.js -t babelify -v"
   },
   "repository": {
     "type": "git",
@@ -34,13 +36,20 @@
     "koa-passport": "^1.2.0",
     "koa-router": "^5.3.0",
     "koa-static-folder": "^0.1.6",
-    "passport-github": "^1.0.0"
+    "passport-github": "^1.0.0",
+    "react": "^15.1.0",
+    "react-dom": "^15.1.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",
     "istanbul": "^0.4.4",
     "mocha": "^2.5.3",
     "shipit-cli": "^1.4.1",
-    "shipit-deploy": "^2.1.2"
+    "shipit-deploy": "^2.1.2",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.11.1",
+    "babelify": "^7.3.0",
+    "browserify": "^13.0.1",
+    "watchify": "^3.7.0"
   }
 }
