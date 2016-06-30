@@ -15,7 +15,7 @@ var Game = React.createClass({
   render: function () {
     return (
       <div>
-        <h1>Game Goes Here</h1>
+        <h1>HEARTS!/h1>
       </div>
     );
   }
