@@ -10,7 +10,7 @@ let newDeck;
 
 describe("Deck Model - New Deck", () => {
 	before(() => {
-		deck = deckModel.newDeck();
+		deck = deckModel.newDeck(52);
 	});
 
 	it("deck should be a valid array", (done) => {
@@ -27,7 +27,7 @@ describe("Deck Model - New Deck", () => {
 
 describe("Deck Model - Shuffle Deck", () => {
 	before(() => {
-		deck = deckModel.newDeck();
+		deck = deckModel.newDeck(52);
 		// cloning the array is required for the tests to work correctly
 		oldDeck = JSON.parse(JSON.stringify(deck));
 		newDeck = deckModel.shuffleDeck(deck);
