@@ -1,0 +1,210 @@
+[
+	{
+		"name": "2H",
+		"img_src": "../assets/images/cards/cardHearts2.png"
+	},
+	{
+		"name": "2S",
+		"img_src": "../assets/images/cards/cardSpades2.png"
+	},
+	{
+		"name": "2C",
+		"img_src": "../assets/images/cards/cardClubs2.png"
+	},
+	{
+		"name": "2D",
+		"img_src": "../assets/images/cards/cardDiamonds2.png"
+	},
+	{
+		"name": "3H",
+		"img_src": "../assets/images/cards/cardHearts3.png"
+	},
+	{
+		"name": "3S",
+		"img_src": "../assets/images/cards/cardSpades3.png"
+	},
+	{
+		"name": "3C",
+		"img_src": "../assets/images/cards/cardClubs3.png"
+	},
+	{
+		"name": "3D",
+		"img_src": "../assets/images/cards/cardDiamonds3.png"
+	},
+	{
+		"name": "4H",
+		"img_src": "../assets/images/cards/cardHearts4.png"
+	},
+	{
+		"name": "4S",
+		"img_src": "../assets/images/cards/cardSpades4.png"
+	},
+	{
+		"name": "4C",
+		"img_src": "../assets/images/cards/cardClubs4.png"
+	},
+	{
+		"name": "4D",
+		"img_src": "../assets/images/cards/cardDiamonds4.png"
+	},
+	{
+		"name": "5H",
+		"img_src": "../assets/images/cards/cardHearts5.png"
+	},
+	{
+		"name": "5S",
+		"img_src": "../assets/images/cards/cardSpades5.png"
+	},
+	{
+		"name": "5C",
+		"img_src": "../assets/images/cards/cardClubs5.png"
+	},
+	{
+		"name": "5D",
+		"img_src": "../assets/images/cards/cardDiamonds5.png"
+	},
+	{
+		"name": "6H",
+		"img_src": "../assets/images/cards/cardHearts6.png"
+	},
+	{
+		"name": "6S",
+		"img_src": "../assets/images/cards/cardSpades6.png"
+	},
+	{
+		"name": "6C",
+		"img_src": "../assets/images/cards/cardClubs6.png"
+	},
+	{
+		"name": "6D",
+		"img_src": "../assets/images/cards/cardDiamonds6.png"
+	},
+	{
+		"name": "7H",
+		"img_src": "../assets/images/cards/cardHearts7.png"
+	},
+	{
+		"name": "7S",
+		"img_src": "../assets/images/cards/cardSpades7.png"
+	},
+	{
+		"name": "7C",
+		"img_src": "../assets/images/cards/cardClubs7.png"
+	},
+	{
+		"name": "7D",
+		"img_src": "../assets/images/cards/cardDiamonds7.png"
+	},
+	{
+		"name": "8H",
+		"img_src": "../assets/images/cards/cardHearts8.png"
+	},
+	{
+		"name": "8S",
+		"img_src": "../assets/images/cards/cardSpades8.png"
+	},
+	{
+		"name": "8C",
+		"img_src": "../assets/images/cards/cardClubs8.png"
+	},
+	{
+		"name": "8D",
+		"img_src": "../assets/images/cards/cardDiamonds8.png"
+	},
+	{
+		"name": "9H",
+		"img_src": "../assets/images/cards/cardHearts9.png"
+	},
+	{
+		"name": "9S",
+		"img_src": "../assets/images/cards/cardSpades9.png"
+	},
+	{
+		"name": "9C",
+		"img_src": "../assets/images/cards/cardClubs9.png"
+	},
+	{
+		"name": "9D",
+		"img_src": "../assets/images/cards/cardDiamonds9.png"
+	},
+	{
+		"name": "10H",
+		"img_src": "../assets/images/cards/cardHearts10.png"
+	},
+	{
+		"name": "10S",
+		"img_src": "../assets/images/cards/cardSpades10.png"
+	},
+	{
+		"name": "10C",
+		"img_src": "../assets/images/cards/cardClubs10.png"
+	},
+	{
+		"name": "10D",
+		"img_src": "../assets/images/cards/cardDiamonds10.png"
+	},
+	{
+		"name": "JH",
+		"img_src": "../assets/images/cards/cardHeartsJ.png"
+	},
+	{
+		"name": "JS",
+		"img_src": "../assets/images/cards/cardSpadesJ.png"
+	},
+	{
+		"name": "JC",
+		"img_src": "../assets/images/cards/cardClubsJ.png"
+	},
+	{
+		"name": "JD",
+		"img_src": "../assets/images/cards/cardDiamondsJ.png"
+	},
+	{
+		"name": "QH",
+		"img_src": "../assets/images/cards/cardHeartsQ.png"
+	},
+	{
+		"name": "QS",
+		"img_src": "../assets/images/cards/cardSpadesQ.png"
+	},
+	{
+		"name": "QC",
+		"img_src": "../assets/images/cards/cardClubsQ.png"
+	},
+	{
+		"name": "QD",
+		"img_src": "../assets/images/cards/cardDiamondsQ.png"
+	},
+	{
+		"name": "KH",
+		"img_src": "../assets/images/cards/cardHeartsK.png"
+	},
+	{
+		"name": "KS",
+		"img_src": "../assets/images/cards/cardSpadesK.png"
+	},
+	{
+		"name": "KC",
+		"img_src": "../assets/images/cards/cardClubsK.png"
+	},
+	{
+		"name": "KD",
+		"img_src": "../assets/images/cards/cardDiamondsK.png"
+	},
+	{
+		"name": "AH",
+		"img_src": "../assets/images/cards/cardHeartsA.png"
+	},
+	{
+		"name": "AS",
+		"img_src": "../assets/images/cards/cardSpadesA.png"
+	},
+	{
+		"name": "AC",
+		"img_src": "../assets/images/cards/cardClubsA.png"
+	},
+	{
+		"name": "AD",
+		"img_src": "../assets/images/cards/cardDiamondsA.png"
+	}
+]
