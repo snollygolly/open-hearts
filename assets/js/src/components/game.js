@@ -1,6 +1,6 @@
 import React from 'react';
 
-var Game = React.createClass({
+const Game = React.createClass({
   propTypes: {
     // Property types would go here
   },
@@ -15,7 +15,7 @@ var Game = React.createClass({
   render: function () {
     return (
       <div>
-        <h1>HEARTS!/h1>
+        <h1>HEARTS!</h1>
       </div>
     );
   }
