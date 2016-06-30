@@ -12,5 +12,6 @@ const main = require("./controllers/main.js");
 // routes
 
 routes.get("/", main.index);
+routes.get("/game", main.game);
 
 app.use(routes.middleware());
