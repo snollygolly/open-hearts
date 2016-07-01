@@ -25,6 +25,8 @@ describe("Game Model - New Game", () => {
 		expect(game).to.have.property("max_players");
 		expect(game).to.have.property("players");
 		expect(game).to.have.property("turns");
+		expect(game).to.have.property("oldDeck");
+		expect(game).to.have.property("newDeck");
 		expect(game).to.have.property("hands");
 		return done();
 	});
@@ -41,6 +43,9 @@ describe("Game Model - New Game", () => {
 		// of 4, for joined players
 		expect(game.players).to.be.an("array");
 		expect(game.players.length).to.equal(4);
+		for (const player of game.players) {
+			expect(player.hand.length).to.be.equal(13);
+		}
 		// empty array for turns, since it hasn't started yet
 		expect(game.turns).to.be.an("array");
 		expect(game.turns.length).to.equal(0);
@@ -49,6 +54,7 @@ describe("Game Model - New Game", () => {
 		for (const hand of game.hands) {
 			expect(hand.length).to.equal(13);
 		}
+
 		return done();
 	});
 });
