@@ -30,22 +30,19 @@ module.exports = {
 	* @returns {object} game -  The full game object
 	*/
 	newGame: (players) => {
-	// make a new deck when we start a game then
-	// shuffle the deck and split it into hands
-	    deck = deckModel.newDeck(52);
-	    newDeck = deckModel.shuffleDeck(deck);
-	    hands = handModel.newHands(newDeck);
-	    // FIX ME!! see notes above!
-	    player1 = playerModel.newPlayer("Player1");
-	    player2 = playerModel.newPlayer("Player2");
-	    player3 = playerModel.newPlayer("Player3");
-	    player4 = playerModel.newPlayer("Player4");
-	    // add hands to the player!
-	    player1.hand = hands[0];
-	    player2.hand = hands[1];
-	    player3.hand = hands[2];
-	    player4.hand = hands[3];
 		const game = {
+		    deck: deckModel.newDeck(52),
+		    newDeck: deckModel.shuffleDeck(deck),
+	        hands: handModel.newHands(newDeck),
+	        // FIX ME!! see notes above!
+	        player1: playerModel.newPlayer("Player1"),
+	        player2: playerModel.newPlayer("Player2"),
+	        player3: playerModel.newPlayer("Player3"),
+	        player4: playerModel.newPlayer("Player4"),
+	        player1.hand: hands[0];
+	        player2.hand: hands[1];
+	        player3.hand: hands[2];
+	        player4.hand: hands[3];
 			// TODO: add an actual id
 			id: 0,
 			// TODO: generate unique token for sessions
