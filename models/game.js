@@ -10,17 +10,6 @@ const deckModel = require("./deck");
 const handModel = require("./hands");
 const playerModel = require("./player");
 
-let deck;
-let newDeck;
-let hands;
-// Declaring all 4 players here, FIXME!! maybe put a
-// function in player model to return an array of
-// players
-let player1;
-let player2;
-let player3;
-let player4;
-
 module.exports = {
 	/**
 	* newGame
