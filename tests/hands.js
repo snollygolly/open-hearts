@@ -23,7 +23,21 @@ describe("Hands Model - New Hands", () => {
 	});
 
 	it("hands should require an array", (done) => {
-		expect(deck).to.be.an("array");
+		expect(hands).to.be.an("array");
+		return done();
+	});
+
+	it("hands should consist of the correct number of hands", (done) => {
+		// TODO: change this with multiple players
+		expect(hands.length).to.equal(4);
+		return done();
+	});
+
+	it("each hand should have the correct number of cards", (done) => {
+		// TODO: change this with multiple players
+		for (const hand of hands) {
+			expect(hand.length).to.equal(13);
+		}
 		return done();
 	});
 });
