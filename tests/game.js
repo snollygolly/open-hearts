@@ -25,6 +25,13 @@ describe("Game Model - New Game", () => {
 		expect(game).to.have.property("max_players");
 		expect(game).to.have.property("players");
 		expect(game).to.have.property("turns");
+		expect(game).to.have.property("deck");
+		expect(game).to.have.property("newDeck");
+		expect(game).to.have.property("hands");
+		expect(game).to.have.property("player1");
+		expect(game).to.have.property("player2");
+		expect(game).to.have.property("player3");
+		expect(game).to.have.property("player4");
 		return done();
 	});
 
@@ -36,12 +43,27 @@ describe("Game Model - New Game", () => {
 		expect(game.state).to.equal("waiting");
 		// TODO: make this work with dynamic max_players
 		expect(game.max_players).to.equal(4);
-		// empty array for joined players
+		// should be array with length
+		// of 4, for joined players
 		expect(game.players).to.be.an("array");
-		expect(game.players.length).to.equal(0);
+		expect(game.players.length).to.equal(4);
 		// empty array for turns, since it hasn't started yet
 		expect(game.turns).to.be.an("array");
 		expect(game.turns.length).to.equal(0);
+		expect(game.deck).to.be.an("array");
+		expect(game.deck.length).to.equal(52);
+		expect(game.newDeck).to.be.an("array");
+		expect(game.newDeck.length).to.equal(52);
+		expect(game.hands).to.be.an("array");
+		expect(game.hands.length).to.equal(4);
+		expect(game.player1.hand).to.be.an("array");
+		expect(game.player1.hand.length).to.equal(13);
+		expect(game.player2.hand).to.be.an("array");
+		expect(game.player2.hand.length).to.equal(13);
+		expect(game.player3.hand).to.be.an("array");
+		expect(game.player3.hand.length).to.equal(13);
+		expect(game.player4.hand).to.be.an("array");
+		expect(game.player4.hand.length).to.equal(13);
 		return done();
 	});
 });
