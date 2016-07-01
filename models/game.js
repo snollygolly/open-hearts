@@ -34,7 +34,7 @@ module.exports = {
 	// shuffle the deck and split it into hands
 	    deck = deckModel.newDeck(52);
 	    newDeck = deckModel.shuffleDeck(deck);
-	    hands = handModel.newHand(newDeck);
+	    hands = handModel.newHands(newDeck);
 	    // FIX ME!! see notes above!
 	    player1 = playerModel.newPlayer("Player1");
 	    player2 = playerModel.newPlayer("Player2");
