@@ -20,14 +20,8 @@ module.exports = {
 	*/
 	newGame: (players) => {
 		const game = {
-		    deck: deckModel.newDeck(52),
-		    newDeck: deckModel.shuffleDeck(deck),
-	        hands: handModel.newHands(newDeck),
-	        // FIX ME!! see notes above!
-	        player1: playerModel.newPlayer("Player1"),
-	        player2: playerModel.newPlayer("Player2"),
-	        player3: playerModel.newPlayer("Player3"),
-	        player4: playerModel.newPlayer("Player4"),
+			// Maybe hands should be assigned in player?
+			hands: handModel.newHands(deckModel.shuffleDeck(deckModel.newDeck(52))),
 			// TODO: add an actual id
 			id: 0,
 			// TODO: generate unique token for sessions
@@ -35,7 +29,8 @@ module.exports = {
 			state: "waiting",
 			// TODO: change this so we allow more than 4
 			max_players: 4,
-			players: [ player1, player2, player3, player4
+			// FIXME!! The player array should be defined in the player model. For now it is hard coded!
+			players: [ playerModel.newPlayer("Player1"), playerModel.newPlayer("Player2"), playerModel.newPlayer("Player3"), playerModel.newPlayer("Player4")
 			],
 			turns: [
 

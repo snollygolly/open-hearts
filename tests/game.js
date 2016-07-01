@@ -25,13 +25,7 @@ describe("Game Model - New Game", () => {
 		expect(game).to.have.property("max_players");
 		expect(game).to.have.property("players");
 		expect(game).to.have.property("turns");
-		expect(game).to.have.property("deck");
-		expect(game).to.have.property("newDeck");
 		expect(game).to.have.property("hands");
-		expect(game).to.have.property("player1");
-		expect(game).to.have.property("player2");
-		expect(game).to.have.property("player3");
-		expect(game).to.have.property("player4");
 		return done();
 	});
 
@@ -50,12 +44,11 @@ describe("Game Model - New Game", () => {
 		// empty array for turns, since it hasn't started yet
 		expect(game.turns).to.be.an("array");
 		expect(game.turns.length).to.equal(0);
-		expect(game.deck).to.be.an("array");
-		expect(game.deck.length).to.equal(52);
-		expect(game.newDeck).to.be.an("array");
-		expect(game.newDeck.length).to.equal(52);
 		expect(game.hands).to.be.an("array");
 		expect(game.hands.length).to.equal(4);
+		for (const hand of game.hands) {
+			expect(hand.length).to.equal(13);
+		}
 		return done();
 	});
 });
