@@ -56,14 +56,6 @@ describe("Game Model - New Game", () => {
 		expect(game.newDeck.length).to.equal(52);
 		expect(game.hands).to.be.an("array");
 		expect(game.hands.length).to.equal(4);
-		expect(game.player1.hand).to.be.an("array");
-		expect(game.player1.hand.length).to.equal(13);
-		expect(game.player2.hand).to.be.an("array");
-		expect(game.player2.hand.length).to.equal(13);
-		expect(game.player3.hand).to.be.an("array");
-		expect(game.player3.hand.length).to.equal(13);
-		expect(game.player4.hand).to.be.an("array");
-		expect(game.player4.hand.length).to.equal(13);
 		return done();
 	});
 });

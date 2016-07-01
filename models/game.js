@@ -39,10 +39,6 @@ module.exports = {
 	        player2: playerModel.newPlayer("Player2"),
 	        player3: playerModel.newPlayer("Player3"),
 	        player4: playerModel.newPlayer("Player4"),
-	        player1.hand: hands[0];
-	        player2.hand: hands[1];
-	        player3.hand: hands[2];
-	        player4.hand: hands[3];
 			// TODO: add an actual id
 			id: 0,
 			// TODO: generate unique token for sessions
