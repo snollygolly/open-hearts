@@ -1,7 +1,10 @@
-$( document ).ready(function() {
-	$("#startButton").on("click", function(e) {
+$( document ).ready(function () {
+	document.body.style.backgroundColor = 'darkgreen';
+	
+	$("#startButton").on("click", function (e) {
 		e.preventDefault();
 		var players = $("#playerNumber").val();
+
 		$.ajax({
 		 type: 'POST',
 		 dataType: 'json',
