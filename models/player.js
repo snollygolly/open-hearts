@@ -6,6 +6,9 @@
  *
  */
 
+const Chance = require("chance");
+const chance = new Chance();
+
 module.exports = {
 	/**
 	* newPlayer
@@ -17,8 +20,7 @@ module.exports = {
 	*/
 	newPlayer: (name, hand) => {
 		const player = {
-			// TODO: add an actual id
-			id: 0,
+			id: chance.hammertime(),
 			name: name,
 			// TODO: generate a hand based off newHand in the hand model
 			hand: hand,

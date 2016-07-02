@@ -6,6 +6,9 @@
  *
  */
 
+const Chance = require("chance");
+const chance = new Chance();
+
 const deckModel = require("./deck");
 const handModel = require("./hands");
 const playerModel = require("./player");
@@ -22,11 +25,10 @@ module.exports = {
 		const crispDeck = deckModel.newDeck(52);
 		const shuffledDeck = deckModel.shuffleDeck(crispDeck);
 		const playerHands = handModel.newHands(shuffledDeck);
+		console.log(chance.guid());
 		const game = {
-			// TODO: add an actual id
-			id: 0,
-			// TODO: generate unique token for sessions
-			token: 0,
+			id: chance.guid(),
+			token: chance.hash({length: 15}),
 			state: "waiting",
 			// TODO: change this so we allow more than 4
 			max_players: 4,
