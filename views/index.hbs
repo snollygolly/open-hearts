@@ -5,15 +5,7 @@
 		<p class="lead">{{get_name}} is the exciting new game sweeping the nation.  Probably.</p>
 	</div>
 	<p><h3>Start a game of hearts!</h3></p>
-	<form action="">
+	<form>
 			Number of players:	<input id="playerNumber" readonly autocomplete="off" Value="4"/><p></p><button id="startButton">Start Game</button>
 	</form>
-	<script src="../controllers/api.js"></script>
-	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
-	<script>
-			$('form').submit(function () {
-					newGame($('#playerNumber').val());
-					return $('#result');
-			});
-	</script>
 </div><!-- /.container -->
