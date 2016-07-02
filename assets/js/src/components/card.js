@@ -1,6 +1,7 @@
 import React from 'react';
 
 import CardList from '../../../../models/data/cards.json';
+import CardBackList from '../../../../models/data/cardBacks.json';
 
 const Card = React.createClass({
   propTypes: {
@@ -15,7 +16,7 @@ const Card = React.createClass({
     document.body.style.backgroundColor = 'darkgreen';
 
     this.setState({
-      card: './assets/images/cards/' + CardList[0][this.props.name]
+      card: './assets/images/cards/' + ((this.props.name == 'CardBack_blue5') ? CardBackList[this.props.name] : CardList[this.props.name])
     });
 
     console.log(this.state.card);
