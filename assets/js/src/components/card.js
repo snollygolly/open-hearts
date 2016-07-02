@@ -1,6 +1,6 @@
 import React from 'react';
 
-import CardList from '../../../../models/data/cards.json';
+import CardList from '../../../../models/data/cardBacks.json';
 
 const Card = React.createClass({
   propTypes: {
