@@ -29,10 +29,11 @@ describe("Game Model - New Game", () => {
 	});
 
 	it("game should have the correct starting values", (done) => {
-		// TODO: connect to actual ID generation
-		expect(game.id).to.equal(0);
-		// TODO: connect to token generation
-		expect(game.token).to.equal(0);
+		expect(game.id).to.be.a("string");
+		// 32 char guid + 4 dashes
+		expect(game.id.length).to.equal(36);
+		expect(game.token).to.be.a("string");
+		expect(game.token.length).to.equal(15);
 		expect(game.state).to.equal("waiting");
 		// TODO: make this work with dynamic max_players
 		expect(game.max_players).to.equal(4);
@@ -40,9 +41,6 @@ describe("Game Model - New Game", () => {
 		// of 4, for joined players
 		expect(game.players).to.be.an("array");
 		expect(game.players.length).to.equal(4);
-		for (const player of game.players) {
-			expect(player.hand.length).to.be.equal(13);
-		}
 		// empty array for turns, since it hasn't started yet
 		expect(game.turns).to.be.an("array");
 		expect(game.turns.length).to.equal(0);

@@ -30,8 +30,7 @@ describe("Player Model - New Player", () => {
 	});
 
 	it("player should have the correct starting values", (done) => {
-		// TODO: connect to actual ID generation
-		expect(player.id).to.equal(0);
+		expect(player.id).to.be.a("number");
 		expect(player.name).to.equal("test");
 		expect(player.hand).to.be.an("array");
 		expect(player.hand.length).to.equal(13);

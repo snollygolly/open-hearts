@@ -25,7 +25,6 @@ module.exports = {
 		const crispDeck = deckModel.newDeck(52);
 		const shuffledDeck = deckModel.shuffleDeck(crispDeck);
 		const playerHands = handModel.newHands(shuffledDeck);
-		console.log(chance.guid());
 		const game = {
 			id: chance.guid(),
 			token: chance.hash({length: 15}),
