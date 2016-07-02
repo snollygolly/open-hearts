@@ -15,7 +15,7 @@ const Card = React.createClass({
     document.body.style.backgroundColor = 'darkgreen';
 
     this.setState({
-      card: './assets/images/cards/' + CardList[0][this.props.name]
+      card: './assets/images/cards/' + CardList[this.props.name]
     });
 
     console.log(this.state.card);

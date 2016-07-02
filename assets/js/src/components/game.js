@@ -24,17 +24,17 @@ const Game = React.createClass({
         </div>
         <div className="leftHand">
           <div className="leftCards">
-            <Card name="CB_blue5" />
+            <Card name="CardBack_blue5" />
           </div>      
         </div>
         <div className="topHand">
           <div className="topCards">
-            <Card name="CB_blue5" />
+            <Card name="CardBack_blue5" />
           </div>      
         </div>
         <div className="rightHand">
           <div className="rightCards">
-            <Card name="CB_blue5" />
+            <Card name="CardBack_blue5" />
           </div>      
         </div>
 
