@@ -11,6 +11,7 @@ const Game = React.createClass({
     };
   },
   componentWillMount: function () {
+    // Set body's background color
     document.body.style.backgroundColor = 'darkgreen';
   },
   render: function () {

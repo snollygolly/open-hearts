@@ -34,4 +34,4 @@ tmp
 coverage
 
 # The bundled scripts
-./assets/js/scripts.min.js
+assets/js/scripts.min.js
