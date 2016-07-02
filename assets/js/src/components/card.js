@@ -18,12 +18,10 @@ const Card = React.createClass({
     this.setState({
       card: './assets/images/cards/' + ((this.props.name == 'CardBack_blue5') ? CardBackList[this.props.name] : CardList[this.props.name])
     });
-
-    console.log(this.state.card);
   },
   render: function () {
     return (
-      <div style={{ textAlign: 'center', verticalAlign: 'middle'}}>
+      <div>
         <img src={ this.state.card }></img>
       </div>
     );

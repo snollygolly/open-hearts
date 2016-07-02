@@ -1,4 +1,5 @@
 import React from 'react';
+import Hand from './hand';
 import Card from './card';
 
 const Game = React.createClass({
@@ -13,30 +14,23 @@ const Game = React.createClass({
   componentWillMount: function () {
     // Set body's background color.
     document.body.style.backgroundColor = 'darkgreen';
+
+    // Events will be emitted in this component
   },
   render: function () {
     return (
-      <div style={{ height: '100%', width: '100%' }}>
+      <div>
         <div className="bottomHand">
-          <div className="bottomCards">
-            <Card name="2H" />
-            <Card name="2H" />
-          </div>
+          <Hand location="bottom" />
         </div>
         <div className="leftHand">
-          <div className="leftCards">
-            <Card name="CardBack_blue5" />
-          </div>      
+          <Hand location="left" />    
         </div>
         <div className="topHand">
-          <div className="topCards">
-            <Card name="CardBack_blue5" />
-          </div>      
+          <Hand location="top" />     
         </div>
         <div className="rightHand">
-          <div className="rightCards">
-            <Card name="CardBack_blue5" />
-          </div>      
+          <Hand location="right" />   
         </div>
 
         <div className="bottomPlayArea">

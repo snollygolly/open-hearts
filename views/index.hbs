@@ -1,11 +1,18 @@
 <div class="container">
-
 	<div class="starter-template">
 		<h1>{{get_name}}</h1>
-		<p class="lead">{{get_name}} is the exciting new game sweeping the nation.  Probably.</p>
+		<p class="lead">{{get_name}} is the exciting new game sweeping the nation.  <i>Probably</i>.</p>
 	</div>
-	<p><h3>Start a game of hearts!</h3></p>
-	<form>
-			Number of players:	<input id="playerNumber" readonly autocomplete="off" Value="4"/><p></p><button id="startButton">Start Game</button>
-	</form>
+
+	<div class="playContainer">
+		<div class="padded-box">
+			<h3>Start a game of hearts!</h3>
+			<form>
+					<p>Number of players:</p>
+					<input class="form-control playersTxt" id="playerNumber" readonly autocomplete="off" Value="4"/>
+					<br />
+					<button class="btn btn-primary startBtn" id="startButton">Start Game</button>
+			</form>
+		</div>	
+	</div>
 </div><!-- /.container -->
