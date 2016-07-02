@@ -1,8 +1,12 @@
 import React from 'react';
 
+import Card from './card';
+import Emitter from '../config/event-emitter';
+
 const Hand = React.createClass({
   propTypes: {
-    user: React.PropTypes.string
+    user: React.PropTypes.string,
+    location: React.PropTypes.string
   },
   getInitialState: function () {
     return {
@@ -10,18 +14,35 @@ const Hand = React.createClass({
     };
   },
   componentWillMount: function () {
-    document.body.style.backgroundColor = 'darkgreen';
+    Emitter.on('playCard', this.playCard);
 
     this.setState({
-      card: './assets/images/cards/' + CardList[0][this.props.name]
+      hand: this.loadHand()
     });
+  },
+  loadHand: function () {
+    const json = [
+      { name: '2H' },
+      { name: '2S' }
+    ];
 
-    console.log(this.state.card);
+    return json;
+  },
+  playCard: function (card) {
+    console.log("card played...");
   },
   render: function () {
+    let cards = [];
+
+    if (this.state.hand !== null) {
+      cards = this.state.hand.map(function (result) {
+        return <Card name={ result.name } />
+      });
+    }
+
     return (
-      <div>
-        <img src={ this.state.card }></img>
+      <div className={ this.props.location + 'Cards' }>
+        { cards }
       </div>
     );
   }
