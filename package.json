@@ -1,7 +1,7 @@
 {
-  "name": "koa-starter",
+  "name": "open-hearts",
   "version": "1.0.0",
-  "description": "A starter kit for a slightly opinionated koa project.",
+  "description": "An open source version of the card game Hearts.",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/snollygolly/koa-starter.git"
+    "url": "git+https://github.com/snollygolly/open-hearts.git"
   },
   "keywords": [
     "koa",
@@ -24,10 +24,11 @@
   "author": "snollygolly (@snollygolly)",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/snollygolly/koa-starter/issues"
+    "url": "https://github.com/snollygolly/open-hearts/issues"
   },
-  "homepage": "https://github.com/snollygolly/koa-starter#readme",
+  "homepage": "https://github.com/snollygolly/open-hearts#readme",
   "dependencies": {
+    "chance": "^1.0.3",
     "co": "^4.6.0",
     "koa": "^1.1.2",
     "koa-bodyparser": "^2.0.1",

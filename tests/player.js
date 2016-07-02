@@ -3,12 +3,16 @@
 const expect = require("chai").expect;
 
 const playerModel = require("../models/player");
+const deckModel = require("../models/deck")
+const handModel = require("../models/hands");
 
 let player;
+let hands;
 
 describe("Player Model - New Player", () => {
 	before(() => {
-		player = playerModel.newPlayer("test");
+		hands = handModel.newHands(deckModel.shuffleDeck(deckModel.newDeck(52)));
+		player = playerModel.newPlayer("test", hands[0]);
 	});
 
 	it("player should be a valid object", (done) => {
@@ -26,11 +30,10 @@ describe("Player Model - New Player", () => {
 	});
 
 	it("player should have the correct starting values", (done) => {
-		// TODO: connect to actual ID generation
-		expect(player.id).to.equal(0);
+		expect(player.id).to.be.a("number");
 		expect(player.name).to.equal("test");
 		expect(player.hand).to.be.an("array");
-		expect(player.hand.length).to.equal(0);
+		expect(player.hand.length).to.equal(13);
 		expect(player.tricks).to.be.an("array");
 		expect(player.tricks.length).to.equal(0);
 		return done();
