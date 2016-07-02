@@ -10,3 +10,130 @@ body {
 .template-heading {
   padding: 40px 15px;
 }
+
+.bottomHand {
+	position: fixed;
+	bottom: 10px;
+	width: 100%;
+}
+
+.bottomCards, .topCards {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.leftHand {
+  position: fixed;
+  left: 35px;
+  top: 0px;
+  height: 100%;
+}
+
+.leftCards {
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.topHand {
+	position: fixed;
+	top: 60px;
+	width: 100%;
+}
+
+.rightHand {
+  position: fixed;
+  right: 35px;
+  top: 0px;
+  height: 100%;
+}
+
+.rightCards {
+  -webkit-transform: rotate(270deg);
+  -moz-transform: rotate(270deg);
+  -o-transform: rotate(270deg);
+  -ms-transform: rotate(270deg);
+  transform: rotate(270deg);
+
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.bottomPlayArea {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.leftPlayArea {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+
+.topPlayArea {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+}
+
+.rightPlayArea {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 4;
+}
+
+.bottomPlayCard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 400px;
+}
+
+.leftPlayCard {
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 350px;
+  margin-left: -100px;
+}
+
+.topPlayCard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 300px;
+}
+
+.rightPlayCard {
+  -webkit-transform: rotate(270deg);
+  -moz-transform: rotate(270deg);
+  -o-transform: rotate(270deg);
+  -ms-transform: rotate(270deg);
+  transform: rotate(270deg);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 350px;
+  margin-right: -100px;
+}
