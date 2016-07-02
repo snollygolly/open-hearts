@@ -9,13 +9,6 @@
 const deckModel = require("./deck");
 const handModel = require("./hands");
 const playerModel = require("./player");
-const oldDeck = deckModel.newDeck(52);
-const newDeck = deckModel.shuffleDeck(oldDeck);
-const hands = handModel.newHands(newDeck);
-const player1 = playerModel.newPlayer("Player1", hands[0]);
-const player2 = playerModel.newPlayer("Player2", hands[1]);
-const player3 = playerModel.newPlayer("Player3", hands[2]);
-const player4 = playerModel.newPlayer("Player4", hands[3]);
 
 module.exports = {
 	/**
@@ -26,14 +19,10 @@ module.exports = {
 	* @returns {object} game -  The full game object
 	*/
 	newGame: (players) => {
+		const crispDeck = deckModel.newDeck(52);
+		const shuffledDeck = deckModel.shuffleDeck(crispDeck);
+		const playerHands = handModel.newHands(shuffledDeck);
 		const game = {
-			oldDeck: oldDeck,
-			newDeck: newDeck,
-			hands: hands,
-			player1: player1,
-			player2: player2,
-			player3: player3,
-			player4: player4,
 			// TODO: add an actual id
 			id: 0,
 			// TODO: generate unique token for sessions
@@ -41,13 +30,16 @@ module.exports = {
 			state: "waiting",
 			// TODO: change this so we allow more than 4
 			max_players: 4,
-			// FIXME!! The player array should be defined in the player model. For now it is hard coded!
-			players: [ player1, player2, player3, player4
-			],
-			turns: [
-
-			]
+			players: [],
+			turns: []
 		};
+		// populate players
+		let i = 0;
+		while (i < 4) {
+			const player = playerModel.newPlayer(`Player ${i + 1}`, playerHands[i]);
+			game.players.push(player);
+			i++;
+		}
 		return game;
 	}
 };
