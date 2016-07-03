@@ -22,8 +22,8 @@ const Hand = React.createClass({
   },
   loadHand: function () {
     const json = [
-      { name: '2H' },
-      { name: '2S' }
+      { key: 1, name: '2H' },
+      { key: 2, name: '2S' }
     ];
 
     return json;
@@ -36,7 +36,7 @@ const Hand = React.createClass({
 
     if (this.state.hand !== null) {
       cards = this.state.hand.map(function (result) {
-        return <Card name={ result.name } />
+        return <Card key={ result.key } name={ result.name } />
       });
     }
 
