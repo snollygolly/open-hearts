@@ -59,7 +59,7 @@ app.use(function* error(next) {
 require("./routes");
 
 console.log(`${config.site.name} is now listening on port ${config.site.port}`);
-server.listen(config.site.port);
+app.listen(config.site.port);
 
 process.on("SIGINT", function exit() {
 	process.exit();
