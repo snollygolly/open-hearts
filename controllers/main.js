@@ -10,8 +10,24 @@ module.exports.index = function* index() {
 };
 
 module.exports.game = function* game() {
-	yield this.render("game", {
-		title: config.site.name,
-		script: "scripts.min"
-	});
+	if (this.params.id !== null) {
+		// Check DB to see if lobby exists
+		if (true) {
+			// If Lobby exists, load game-board
+			yield this.render("game", {
+				title: config.site.name,
+				script: "scripts.min"
+			});
+		} else {
+			// If lobby does not exist, load index
+			yield this.redirect("/");
+		}
+	} else {
+		// If no id param, just load it anyways (for development)
+		// Normally this would redirect to index
+		yield this.render("game", {
+			title: config.site.name,
+			script: "scripts.min"
+		});
+	}
 };
