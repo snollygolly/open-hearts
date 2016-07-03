@@ -1,3 +1,5 @@
+import Socket from '../config/socket';
+
 import React from 'react';
 import Hand from './hand';
 import Card from './card';
@@ -8,14 +10,16 @@ const Game = React.createClass({
   },
   getInitialState: function () {
     return {
-      // State variables go here
+
     };
   },
   componentWillMount: function () {
     // Set body's background color.
     document.body.style.backgroundColor = 'darkgreen';
 
-    // Events will be emitted in this component
+    Socket.emit('create-lobby', {
+      user: 'Test User'
+    });
   },
   render: function () {
     return (

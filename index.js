@@ -49,8 +49,33 @@ app.use(function* error(next) {
 
 require("./routes");
 
+// Attach
+const server = require('http').Server(app.callback());
+const io = require('socket.io')(server);
+const lobby = require('./models/lobby.js');
+
+let lobbies = [];
+
+io.on('connection', function(socket) {
+  console.log('a user connected');
+
+  socket.on('create-lobby', function (event) {
+  	console.log("Attempting to create lobby");
+
+  	if (event !== null) {
+  		let newLobby = new lobby(event.user);
+
+  		lobbies.push(newLobby);
+  	}
+  });
+
+  socket.on('disconnect', function(){
+    console.log('user disconnected');
+  });
+});
+
 console.log(`${config.site.name} is now listening on port ${config.site.port}`);
-app.listen(config.site.port);
+server.listen(config.site.port);
 
 process.on("SIGINT", function exit() {
 	process.exit();
