@@ -42,5 +42,16 @@ module.exports = {
 			i++;
 		}
 		return game;
+	},
+	/**
+	* processAction
+	* Accepts player actions and performs them
+	*
+	* @param {object} action - An object describing the action
+	* @param {object} game - A game object (may be a partial game object)
+	* @returns {object} game -  The full game object
+	*/
+	processAction: (action, game) => {
+		return game;
 	}
 };

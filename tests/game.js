@@ -5,6 +5,8 @@ const expect = require("chai").expect;
 const gameModel = require("../models/game");
 
 let game;
+let action;
+let newGame;
 
 describe("Game Model - New Game", () => {
 	before(() => {
@@ -44,6 +46,22 @@ describe("Game Model - New Game", () => {
 		// empty array for turns, since it hasn't started yet
 		expect(game.turns).to.be.an("array");
 		expect(game.turns.length).to.equal(0);
+		return done();
+	});
+});
+
+describe("Game Model - Process Action", () => {
+	before(() => {
+		// TODO: make this work with more than 4
+		game = gameModel.newGame(4);
+		// replace with an actual action
+		action = {};
+		newGame = gameModel.processAction(action, game);
+	});
+
+	it("game should be a valid object", (done) => {
+		expect(newGame).to.not.be.an("undefined");
+		expect(newGame).to.be.an("object");
 		return done();
 	});
 });
