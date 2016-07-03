@@ -14,6 +14,7 @@ const api = require("./controllers/api.js");
 
 routes.get("/", main.index);
 routes.get("/game", main.game);
+routes.get("/game/:id", main.game);
 
 routes.post("/api/game", api.newGame);
 

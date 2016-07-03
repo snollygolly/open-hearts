@@ -3,7 +3,7 @@
 const expect = require("chai").expect;
 
 const playerModel = require("../models/player");
-const deckModel = require("../models/deck")
+const deckModel = require("../models/deck");
 const handModel = require("../models/hands");
 
 let player;

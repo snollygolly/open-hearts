@@ -17,9 +17,9 @@ const Game = React.createClass({
     // Set body's background color.
     document.body.style.backgroundColor = 'darkgreen';
 
-    Socket.emit('create-lobby', {
-      user: 'Test User'
-    });
+    //Socket.emit('create-lobby', {
+    //user: 'Test User'
+    //});
   },
   render: function () {
     return (
