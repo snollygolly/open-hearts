@@ -26,3 +26,15 @@ npm start
 ```
 
 * Enjoy!
+
+### Setting up front-end development environment
+
+* Build javascript into bundle
+```
+npm run build
+```
+
+* Build javascript into bundle & watch for changes (build on change)
+```
+npm run watch
+```

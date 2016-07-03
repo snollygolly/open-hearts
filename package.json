@@ -7,8 +7,8 @@
     "start": "node index.js",
     "test": "./node_modules/.bin/mocha ./tests/",
     "coverage": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha ./tests/",
-    "build": "browserify ./assets/js/src/scripts.js -o ./assets/js/scripts.min.js -t babelify",
-    "watch": "watchify ./assets/js/src/scripts.js -o ./assets/js/scripts.min.js -t babelify -v"
+    "build": "./node_modules/.bin/browserify ./assets/js/src/scripts.js -o ./assets/js/scripts.min.js -t babelify",
+    "watch": "./node_modules/.bin/watchify ./assets/js/src/scripts.js -o ./assets/js/scripts.min.js -t babelify -v"
   },
   "repository": {
     "type": "git",
