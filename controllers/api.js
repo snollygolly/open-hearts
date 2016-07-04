@@ -19,15 +19,18 @@ module.exports.newGame = function* newGame() {
 		this.status = 400;
 		return this.body = {error: true, message: "Must include number of players"};
 	}
+
 	const game = gameModel.newGame(parseInt(params.players));
 	if (game.error === true) {
 		this.status = 400;
 		return this.body = {error: true, message: game.message};
 	}
+
 	const result = yield db.saveGame(game);
 	if (result.error === true) {
 		this.status = 400;
 		return this.body = {error: true, message: game.message};
 	}
+
 	return this.body = result;
 };

@@ -12,15 +12,14 @@ const co = require("co");
 io.on("connection", (ctx, data) => {
 	// eslint-disable-next-line require-yield
 	co(function* co() {
-		io.broadcast("connect", players);
+		io.broadcast("connect");
 		console.log("join event fired", data);
 	}).catch(onError);
 });
 
 io.on("disconnect", (ctx, data) => {
 	co(function* co() {
-		const players = yield session.disconnectPlayer(data.id);
-		io.broadcast("disconnect", players);
+		io.broadcast("disconnected");
 		console.log("leave event fired", data);
 	}).catch(onError);
 });
@@ -40,10 +39,10 @@ io.on("join", (ctx, data) => {
 		try {
 			payload = JSON.parse(data);
 		} catch (err) {
-			return io.socket.emit("join", {
+			return {
 				error: true,
 				message: "Bad game object"
-			});
+			};
 		}
 		// TODO: this is just because my websocket utility is wacky...i hope
 		try {
@@ -58,7 +57,7 @@ io.on("join", (ctx, data) => {
 		if (game.error === true) {
 			// something went wrong during load
 			console.log("Something went wrong during game retrieval");
-			return io.socket.emit("join", JSON.stringify(game));
+			return JSON.stringify(game);
 		}
 		// create a player object
 		const player = playerModel.newPlayer(cleanedName);
@@ -66,15 +65,17 @@ io.on("join", (ctx, data) => {
 		if (game.error === true) {
 			// something went wrong during load
 			console.log("Something went wrong during joining");
-			return io.socket.emit("join", JSON.stringify(game));
+			return JSON.stringify(game);
 		}
 		game = yield db.saveGame(game);
 		if (game.error === true) {
 			// something went wrong during load
 			console.log("Something went wrong during saving");
-			return io.socket.emit("join", JSON.stringify(game));
+			return JSON.stringify(game);
 		}
-		io.socket.emit("join", JSON.stringify(game));
+
+		// Must send data back to client
+		JSON.stringify(game);
 	}).catch(onError);
 });
 
@@ -85,10 +86,10 @@ io.on("fetch", (ctx, data) => {
 		if (game.error === true) {
 			// something went wrong during load
 			console.log("Something went wrong during game retrieval");
-			io.socket.emit("fetch", JSON.stringify(game));
-			return;
+			return JSON.stringify(game);
 		}
-		io.socket.emit("fetch", JSON.stringify(game));
+
+		JSON.stringify(game);
 	}).catch(onError);
 });
 
@@ -98,17 +99,15 @@ io.on("action", (ctx, data) => {
 		if (game.error === true) {
 			// something went wrong during load
 			console.log("Something went wrong during game retrieval");
-			io.socket.emit("action", JSON.stringify(game));
-			return;
+			return JSON.stringify(game);
 		}
 		game = model.processAction(data.action, game);
 		if (game.error === true) {
 			// something went wrong during load
 			console.log("Something went wrong during action performing");
-			io.socket.emit("action", JSON.stringify(game));
-			return;
+			return JSON.stringify(game);
 		}
-		io.socket.emit("action", JSON.stringify(game));
+		JSON.stringify(game);
 		// TODO: don't actually send out the entire game object, send a pruned version
 		io.broadcast("action", game);
 	}).catch(onError);

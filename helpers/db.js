@@ -25,7 +25,11 @@ exports.getGame = function* getGame(id) {
 	try {
 		const db = connectToDatabase("games");
 		const doc = yield db.getAsync(id);
-		return doc;
+    
+		return {
+      error: false,
+      message: doc
+    };
 	} catch (err) {
 		return {
 			error: true,
@@ -40,7 +44,11 @@ exports.saveGame = function* saveGame(document) {
 		const db = connectToDatabase("games");
 		const returnVal = yield db.saveAsync(document.id, document);
 		document.id = returnVal.id;
-		return document;
+
+		return {
+      error: false,
+      message: document
+    };
 	} catch (err) {
 		return {
 			error: true,
@@ -55,7 +63,11 @@ exports.removeGame = function* removeGame(id) {
 		const db = connectToDatabase("games");
 		const returnVal = yield db.removeAsync(id);
 		document.id = returnVal.id;
-		return document;
+
+		return {
+      error: false,
+      message: document
+    };
 	} catch (err) {
 		return {
 			error: true,

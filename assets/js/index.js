@@ -11,18 +11,18 @@ $( document ).ready(function() {
 		 	url: "/api/game", // A valid URL
 		 	data: {players: players}
 	 	}).done(function(result) {
-		 	if (result.success === false) {
-		 		alert(result.data);
-			 	return console.error(result.data);
+		 	if (result.errpr === true) {
+		 		alert(result.message);
+			 	return console.error(result.message);
 		 	}
 			// do something with the success, like show a link
 			document.getElementById("confirmationMessage").style.visibility = "visible";
-			$("#confirmationMessage").html("<a href='/game/" + result.data.id + "'>Join the Game!</a>");
-			console.log(result.data);
-	 	}).fail(function(result) {
+			$("#confirmationMessage").html("<a href='/game/" + result.message.id + "'>Join the Game!</a>");
+			console.log(result.message);
+	 	}).fail(function(err) {
 			// do something with the failure, like laugh at the user
 			window.alert("hahahahaha! NO!");
-			console.error(result);
+			console.error(err);
 	 });
 	});
 });
