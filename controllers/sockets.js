@@ -9,6 +9,7 @@ const playerModel = require("../models/player");
 
 const co = require("co");
 
+// eslint-disable-next-line require-yield
 io.on("connection", co.wrap(function* co(ctx, data) {
 	io.broadcast("connect", players);
 	console.log("join event fired", data);

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "./node_modules/.bin/mocha ./tests/",
+    "test": "./node_modules/.bin/mocha ./tests/ && ./node_modules/.bin/eslint .",
     "coverage": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha ./tests/",
     "build": "./node_modules/.bin/browserify ./assets/js/src/scripts.js -o ./assets/js/scripts.min.js -t babelify",
     "watch": "./node_modules/.bin/watchify ./assets/js/src/scripts.js -o ./assets/js/scripts.min.js -t babelify -v"
@@ -28,8 +28,10 @@
   },
   "homepage": "https://github.com/snollygolly/open-hearts#readme",
   "dependencies": {
+    "bluebird": "^3.4.1",
     "chance": "^1.0.3",
     "co": "^4.6.0",
+    "cradle": "^0.7.1",
     "event-emitter": "^0.3.4",
     "http": "0.0.0",
     "koa": "^1.1.2",
@@ -46,15 +48,16 @@
     "socket.io-client": "^1.4.8"
   },
   "devDependencies": {
-    "chai": "^3.5.0",
-    "istanbul": "^0.4.4",
-    "mocha": "^2.5.3",
-    "shipit-cli": "^1.4.1",
-    "shipit-deploy": "^2.1.2",
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-react": "^6.11.1",
     "babelify": "^7.3.0",
     "browserify": "^13.0.1",
+    "chai": "^3.5.0",
+    "eslint": "^3.0.0",
+    "istanbul": "^0.4.4",
+    "mocha": "^2.5.3",
+    "shipit-cli": "^1.4.1",
+    "shipit-deploy": "^2.1.2",
     "watchify": "^3.7.0"
   }
 }

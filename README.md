@@ -38,3 +38,41 @@ npm run build
 ```
 npm run watch
 ```
+
+### Setting up Database
+
+* Download and Install CouchDB
+```
+http://couchdb.apache.org/
+```
+
+* Download & Install Make
+```
+https://sourceforge.net/projects/gnuwin32/files/make/3.81/make-3.81.exe/
+```
+
+* Download & Extract curl
+```
+http://curl.haxx.se/gknw.net/7.40.0/dist-w64/curl-7.40.0-rtmp-ssh2-ssl-sspi-zlib-winidn-static-bin-w64.7z
+```
+
+1. Setup environment variables for Make
+	- Check if 'C:\Program Files (x86)\GnuWin32' exists
+	- If it exists, then open up your environment variables
+	- Start Menu > type: 'Edit the system environment variables' (start typing 'environment') > hit enter
+	- Click on the 'Environment Variables...' button
+	- Under System variables, find the variable named "Path", and select it
+	- Hit the 'Edit...' button
+	- Add 'C:\Program Files (x86)\GnuWin32\bin' to the list
+
+2. Setup environment variables for curl
+	- Move the extracted curl folder to 'C:\Program Files (x86)\curl'
+	- Open environment variables like you did above for Make
+	- Find 'Path' variable > Edit button
+	- Add 'C:\Program Files (x86)\curl'
+
+3. Run 'Start CouchDB' (see windows start search)
+4. Open node cmd and navigate (cd) into your open-hearts folder
+5. Type 'Make install' and hit enter
+6. This should create the database
+7. If you would like to clear the database type 'Make clear-db'
