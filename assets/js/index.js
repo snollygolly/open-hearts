@@ -17,8 +17,7 @@ $( document ).ready(function() {
 		 	}
 			// do something with the success, like show a link
 			document.getElementById("confirmationMessage").style.visibility = "visible";
-			$("#confirmationMessage").html("<a href='/game/" + result.message.id + "'>Join the Game!</a>");
-			console.log(result.message);
+			$("#confirmationMessage").html("<a href='/game/" + result.id + "'>Join the Game!</a>");
 	 	}).fail(function(err) {
 			// do something with the failure, like laugh at the user
 			window.alert("hahahahaha! NO!");
