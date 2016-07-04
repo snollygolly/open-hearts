@@ -23,7 +23,6 @@ exports.createGame = Promise.coroutine(function *(gameDoc) {
     gameDoc = yield exports.saveGame(gameDoc, "games");
   }
   catch (err) {
-    console.log("Problem creating game with ID (" + guid + ")");
 		console.log(err);
 
     return {
@@ -55,15 +54,15 @@ exports.getGame = Promise.coroutine(function *(id, dbName) {
 exports.saveGame = Promise.coroutine(function *(gameDoc, dbName) {
   try {
     var db = connectToDatabase(dbName);
-    var returnVal = yield db.saveAsync(gameDoc._id, gameDoc);
+    var returnVal = yield db.saveAsync(gameDoc.id, gameDoc);
 
-    gameDoc._id = returnVal.id;
+    gameDoc.id = returnVal.id;
 
     return gameDoc;
   } catch (err) {
     if(err.name === "CouchDBError") throw err;
 
-    throw new CouchDBError("DB: Save: Save of [" + doc._id + " failed");
+    throw new CouchDBError("DB: Save: Save of [" + gameDoc.id + " failed");
   }
 });
 
