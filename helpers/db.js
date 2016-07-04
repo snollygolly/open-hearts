@@ -46,7 +46,7 @@ exports.saveGame = function* saveGame(document) {
 	} catch (err) {
 		return {
 			error: true,
-			message: `DB: Save of [${id}] failed`
+			message: `DB: Save of [${document.id}] failed`
 		};
 	}
 };

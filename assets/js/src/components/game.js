@@ -35,6 +35,12 @@ const Game = React.createClass({
     socket.on('onJoin', this.handleJoin);
     socket.on('onError', this.handleError);
   },
+  handleReceiveCard: function() {
+
+  },
+  handleSendCard: function() {
+
+  },
   handleJoin: function(data) {
     console.log(data);
   },
