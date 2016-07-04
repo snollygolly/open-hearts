@@ -38,3 +38,26 @@ npm run build
 ```
 npm run watch
 ```
+
+### Setting up Database
+
+* Download and Install CouchDB
+```
+http://couchdb.apache.org/
+```
+
+* Download & Install Make
+```
+https://sourceforge.net/projects/gnuwin32/files/make/3.81/make-3.81.exe/
+```
+
+* Download & Install curl
+```
+http://curl.haxx.se/gknw.net/7.40.0/dist-w64/curl-7.40.0-rtmp-ssh2-ssl-sspi-zlib-winidn-static-bin-w64.7z
+```
+
+1. Run 'Start CouchDB' (see windows start search)
+2. Open node cmd and navigate (cd) into your open-hearts folder
+3. Type 'Make install' and hit enter
+4. This should create the database
+5. If you would like to clear the database type 'Make clear-db'

@@ -9,18 +9,21 @@ const session = require("../helpers/session");
 const co = require("co");
 
 io.on("connection", co(function* co(ctx, data) {
+	console.log("Connection...");
 	const players = yield session.connectPlayer(data.id);
 	io.broadcast("connect", players);
 	console.log("join event fired", data);
 }).catch(onError));
 
 io.on("disconnect", co(function* co(ctx, data) {
+	console.log("Disconnect...");
 	const players = yield session.disconnectPlayer(data.id);
 	io.broadcast("disconnect", players);
 	console.log("leave event fired", data);
 }).catch(onError));
 
 io.on("fetch", co(function* co(ctx, data) {
+	console.log("Fetch...");
 	let game = yield db.getGame(data.id);
 	if (game.error === true) {
 		// something went wrong during load
@@ -32,6 +35,7 @@ io.on("fetch", co(function* co(ctx, data) {
 }).catch(onError));
 
 io.on("action", co(function* co(ctx, data) {
+	console.log("Action...");
 	let game = yield db.getGame(data.id);
 	if (game.error === true) {
 		// something went wrong during load
@@ -55,6 +59,6 @@ function onError(err) {
 	// log any uncaught errors
 	// co will not throw any errors you do not handle!!!
 	// HANDLE ALL YOUR ERRORS!!!
-	console.error("socket error...");
+	console.error("socket error..." + err);
 
 }

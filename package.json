@@ -28,8 +28,10 @@
   },
   "homepage": "https://github.com/snollygolly/open-hearts#readme",
   "dependencies": {
+    "bluebird": "^3.4.1",
     "chance": "^1.0.3",
     "co": "^4.6.0",
+    "cradle": "^0.7.1",
     "event-emitter": "^0.3.4",
     "http": "0.0.0",
     "koa": "^1.1.2",

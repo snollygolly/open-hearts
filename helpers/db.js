@@ -1,17 +1,81 @@
-"use strict";
+const Promise = require("bluebird")
+const cradle  = Promise.promisifyAll(require("cradle"));
+const Chance = require("chance").Chance();
 
-// TODO: remove this!
-const model = require("../models/game");
+// A custom Error just for database problems.
+function CouchDBError(message) {
+  this.name = "CouchDBError";
+  this.message = (message || "");
+}
+CouchDBError.prototype = Error.prototype;
 
-module.exports = {
-	getGame: function* getGame(id) {
-		const game = model.newGame(4);
-		game.error = false;
-		return game;
-	},
-	saveGame: function* saveGame(document) {
-		const game = model.newGame(4);
-		game.error = false;
-		return game;
-	}
+// Connects to a database and returns the DB object.
+var connectToDatabase = function(dbName) {
+  try {
+    return new(cradle.Connection)().database(dbName);
+  } catch (err) {
+    throw new CouchDBError("DB: Get: Connection to database [" + dbName + "] failed");
+  }
 };
+
+exports.createGame = Promise.coroutine(function *(gameDoc) {
+  try {
+    gameDoc = yield exports.saveGame(gameDoc, "games");
+  }
+  catch (err) {
+    console.log("Problem creating game with ID (" + guid + ")");
+		console.log(err);
+
+    return {
+    	success: false,
+    	data: err
+    };
+  }
+
+  return {
+  	success: true,
+  	data: gameDoc
+  };
+});
+
+// Grabs a document from a database in CouchDB.
+exports.getGame = Promise.coroutine(function *(id, dbName) {
+  try {
+    var db = connectToDatabase(dbName);
+    var doc = yield db.getAsync(id);
+    return doc;
+  } catch (err) {
+    if(err.name === "CouchDBError") throw err;
+
+    throw new CouchDBError("DB: Get: Get of [" + id + "] failed");
+  }
+});
+
+// Saves a document in a database in CouchDB.
+exports.saveGame = Promise.coroutine(function *(gameDoc, dbName) {
+  try {
+    var db = connectToDatabase(dbName);
+    var returnVal = yield db.saveAsync(gameDoc._id, gameDoc);
+
+    gameDoc._id = returnVal.id;
+
+    return gameDoc;
+  } catch (err) {
+    if(err.name === "CouchDBError") throw err;
+
+    throw new CouchDBError("DB: Save: Save of [" + doc._id + " failed");
+  }
+});
+
+// Removes a document in a database in CouchDB.
+exports.removeGame = Promise.coroutine(function *(id, dbName) {
+  try {
+    var db = connectToDatabase(dbName);
+    var returnVal = yield db.removeAsync(id);
+    return id;
+  } catch (err) {
+    if(err.name === "CouchDBError") throw err;
+    
+    throw new CouchDBError("DB: Remove: Removal of [" + id + "] failed");
+  }
+});

@@ -1,5 +1,7 @@
 "use strict";
 
+const db = require("../helpers/db");
+
 const config = require("../config.json");
 
 const gameModel = require("../models/game");
@@ -22,6 +24,9 @@ module.exports.newGame = function* newGame() {
 		this.status = 400;
 		return this.body = {error: true, message: game.message};
 	}
-	return this.body = game;
+
+	const result = yield db.createGame(game);
+
+	return this.body = result;
 	// TODO: some db stuff happens here
 };
