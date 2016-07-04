@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "./node_modules/.bin/mocha ./tests/",
-    "eslint": "./node_modules/.bin/eslint .",
+    "test": "./node_modules/.bin/mocha ./tests/ && ./node_modules/.bin/eslint .",
     "coverage": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha ./tests/",
     "build": "./node_modules/.bin/browserify ./assets/js/src/scripts.js -o ./assets/js/scripts.min.js -t babelify",
     "watch": "./node_modules/.bin/watchify ./assets/js/src/scripts.js -o ./assets/js/scripts.min.js -t babelify -v"

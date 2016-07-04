@@ -8,12 +8,12 @@ const Game = React.createClass({
   propTypes: {
     // Property types would go here
   },
-  getInitialState: function () {
+  getInitialState: function() {
     return {
       socket: null
     };
   },
-  componentWillMount: function () {
+  componentWillMount: function() {
     // Set body's background color.
     document.body.style.backgroundColor = 'darkgreen';
 
@@ -25,11 +25,23 @@ const Game = React.createClass({
       name: 'Zach'
     });
 
+    this.createListeners(socket);
+
     this.setState({
       socket: socket
     });
   },
-  render: function () {
+  createListeners: function(socket) {
+    socket.on('onJoin', this.handleJoin);
+    socket.on('onError', this.handleError);
+  },
+  handleJoin: function(data) {
+    console.log(data);
+  },
+  handleError: function(err) {
+    console.log(err);
+  },
+  render: function() {
     return (
       <div>
         <div className="bottomHand">
