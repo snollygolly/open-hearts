@@ -11,8 +11,7 @@ let hands;
 
 describe("Player Model - New Player", () => {
 	before(() => {
-		hands = handModel.newHands(deckModel.shuffleDeck(deckModel.newDeck(52)));
-		player = playerModel.newPlayer("test", hands[0]);
+		player = playerModel.newPlayer("test");
 	});
 
 	it("player should be a valid object", (done) => {
@@ -33,7 +32,7 @@ describe("Player Model - New Player", () => {
 		expect(player.id).to.be.a("number");
 		expect(player.name).to.equal("test");
 		expect(player.hand).to.be.an("array");
-		expect(player.hand.length).to.equal(13);
+		expect(player.hand.length).to.equal(0);
 		expect(player.tricks).to.be.an("array");
 		expect(player.tricks.length).to.equal(0);
 		return done();
