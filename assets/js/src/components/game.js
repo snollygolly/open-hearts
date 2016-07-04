@@ -1,4 +1,4 @@
-import Socket from '../config/socket';
+import Socket from 'socket.io-client';
 
 import React from 'react';
 import Hand from './hand';
@@ -10,16 +10,24 @@ const Game = React.createClass({
   },
   getInitialState: function () {
     return {
-
+      socket: null
     };
   },
   componentWillMount: function () {
     // Set body's background color.
     document.body.style.backgroundColor = 'darkgreen';
 
-    //Socket.emit('create-lobby', {
-    //user: 'Test User'
-    //});
+    const socket = Socket();
+    const gameId = document.URL.substr(document.URL.lastIndexOf("/") + 1);
+
+    socket.emit("join", {
+      game: gameId,
+      name: 'Zach'
+    });
+
+    this.setState({
+      socket: socket
+    });
   },
   render: function () {
     return (
