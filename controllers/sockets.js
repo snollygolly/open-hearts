@@ -4,7 +4,8 @@ const config = require("../config.json");
 const app = require("../index").app;
 const io = app.io;
 const db = require("../helpers/db");
-const session = require("../helpers/session");
+const gameModel = require("../models/game");
+const playerModel = require("../models/player");
 
 const co = require("co");
 
@@ -20,22 +21,33 @@ io.on("disconnect", co.wrap(function* co(ctx, data) {
 }));
 
 io.on("join", co.wrap(function* co(ctx, data) {
+	let payload;
+	try {
+		payload = JSON.parse(data);
+	} catch (err) {
+		console.error("bad json");
+		return io.socket.emit("join", {
+			error: true,
+			message: "Bad game object"
+		});
+	}
+	console.log(`payload: ${JSON.stringify(payload)}`);
 	// replace everything but letters, numbers, and spaces
-	const cleanedName = data.replace(/[^a-zA-Z0-9 ]/g, "");
-	const game = yield db.getGame(data);
+	const cleanedName = payload.name.replace(/[^a-zA-Z0-9 ]/g, "");
+	let game = yield db.getGame(payload.game);
+	console.log(game);
 	if (game.error === true) {
 		// something went wrong during load
 		console.log("Something went wrong during game retrieval");
-		io.socket.emit("join", JSON.stringify(game));
-		return;
+		return io.socket.emit("join", JSON.stringify(game));
 	}
-	// try to join the game
-	const players = yield session.connectPlayer(data.id);
+	// create a player object
+	const player = playerModel.newPlayer(cleanedName);
+	game = gameModel.joinGame(game, player);
 	if (game.error === true) {
 		// something went wrong during load
-		console.log("Something went wrong during action performing");
-		io.socket.emit("join", JSON.stringify(game));
-		return;
+		console.log("Something went wrong during joining");
+		return io.socket.emit("join", JSON.stringify(game));
 	}
 	console.log(game);
 	io.socket.emit("join", JSON.stringify(game));

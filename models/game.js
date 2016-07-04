@@ -26,21 +26,16 @@ module.exports = {
 		const shuffledDeck = deckModel.shuffleDeck(crispDeck);
 		const playerHands = handModel.newHands(shuffledDeck);
 		const game = {
+			error: false,
 			id: chance.guid(),
 			token: chance.hash({length: 15}),
 			state: "waiting",
 			// TODO: change this so we allow more than 4
+			hands: playerHands,
 			max_players: 4,
 			players: [],
 			turns: []
 		};
-		// populate players
-		let i = 0;
-		while (i < 4) {
-			const player = playerModel.newPlayer(`Player ${i + 1}`, playerHands[i]);
-			game.players.push(player);
-			i++;
-		}
 		return game;
 	},
 	/**
@@ -52,6 +47,27 @@ module.exports = {
 	* @returns {object} game -  The full game object
 	*/
 	processAction: (action, game) => {
+		return game;
+	},
+	/**
+	* joinGame
+	* Attempts to join a game
+	*
+	* @param {string} game - The full game object
+	* @param {array} player - The player trying to join
+	* @returns {object} game -  The full game object
+	*/
+	joinGame: (game, player) => {
+		// check to see if the game is full
+		if (game.players.length > game.max_players) {
+			game.error = true;
+			game.message = "Game is full";
+			return game;
+		}
+		// get his hand
+		player.hand = game.hands.pop();
+		// add him to the players array
+		game.players.push(player);
 		return game;
 	}
 };
