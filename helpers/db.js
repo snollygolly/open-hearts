@@ -1,3 +1,4 @@
+const co = require("co");
 const Promise = require("bluebird");
 const cradle	= Promise.promisifyAll(require("cradle"));
 const Chance = require("chance");
@@ -19,67 +20,46 @@ const connectToDatabase = (dbName) => {
 	}
 };
 
-exports.createGame = Promise.coroutine(function* co(gameDoc) {
-	try {
-		gameDoc = yield exports.saveGame(gameDoc, "games");
-	}
-	catch (err) {
-		console.log(err);
-
-		return {
-			success: false,
-			data: err
-		};
-	}
-
-	return {
-		success: true,
-		data: gameDoc
-	};
-});
-
 // Grabs a document from a database in CouchDB.
-exports.getGame = Promise.coroutine(function* co(id, dbName) {
+exports.getGame = function* getGame(id) {
 	try {
-		const db = connectToDatabase(dbName);
+		const db = connectToDatabase("games");
 		const doc = yield db.getAsync(id);
 		return doc;
 	} catch (err) {
-		if (err.name === "CouchDBError") {
-			throw err;
-		}
-		throw new CouchDBError(`DB: Get: Get of [${id}] failed`);
+		return {
+			error: true,
+			message: `DB: Get of [${id}] failed`
+		};
 	}
-});
+};
 
 // Saves a document in a database in CouchDB.
-exports.saveGame = Promise.coroutine(function* co(gameDoc, dbName) {
+exports.saveGame = function* saveGame(document) {
 	try {
-		const db = connectToDatabase(dbName);
-		const returnVal = yield db.saveAsync(gameDoc.id, gameDoc);
-
-		gameDoc.id = returnVal.id;
-
-		return gameDoc;
+		const db = connectToDatabase("games");
+		const returnVal = yield db.saveAsync(document.id, document);
+		document.id = returnVal.id;
+		return document;
 	} catch (err) {
-		if (err.name === "CouchDBError") {
-			throw err;
-		}
-
-		throw new CouchDBError(`DB: Save: Save of [${id}] failed`);
+		return {
+			error: true,
+			message: `DB: Save of [${id}] failed`
+		};
 	}
-});
+};
 
 // Removes a document in a database in CouchDB.
-exports.removeGame = Promise.coroutine(function* co(id, dbName) {
+exports.removeGame = function* removeGame(id) {
 	try {
-		const db = connectToDatabase(dbName);
+		const db = connectToDatabase("games");
 		const returnVal = yield db.removeAsync(id);
-		return id;
+		document.id = returnVal.id;
+		return document;
 	} catch (err) {
-		if (err.name === "CouchDBError") {
-			throw err;
-		}
-		throw new CouchDBError(`DB: Remove: Removal of [${id}] failed`);
+		return {
+			error: true,
+			message: `DB: Delete of [${id}] failed`
+		};
 	}
-});
+};

@@ -63,6 +63,12 @@ io.on("join", (ctx, data) => {
 			console.log("Something went wrong during joining");
 			return io.socket.emit("join", JSON.stringify(game));
 		}
+		game = yield db.saveGame(game);
+		if (game.error === true) {
+			// something went wrong during load
+			console.log("Something went wrong during saving");
+			return io.socket.emit("join", JSON.stringify(game));
+		}
 		io.socket.emit("join", JSON.stringify(game));
 	}).catch(onError);
 });
