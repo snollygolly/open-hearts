@@ -9,17 +9,22 @@ const playerModel = require("../models/player");
 
 const co = require("co");
 
-// eslint-disable-next-line require-yield
-io.on("connection", co.wrap(function* co(ctx, data) {
-	io.broadcast("connect", players);
-	console.log("join event fired", data);
-}));
+io.on("connection", (ctx, data) => {
+	// eslint-disable-next-line require-yield
+	co(function* co() {
+		io.broadcast("connect", players);
+		console.log("join event fired", data);
+	}).catch(onError);
+});
 
-io.on("disconnect", co.wrap(function* co(ctx, data) {
-	const players = yield session.disconnectPlayer(data.id);
-	io.broadcast("disconnect", players);
-	console.log("leave event fired", data);
-}));
+io.on("disconnect", (ctx, data) => {
+	co(function* co() {
+		const players = yield session.disconnectPlayer(data.id);
+		io.broadcast("disconnect", players);
+		console.log("leave event fired", data);
+	}).catch(onError);
+});
+
 
 /**
 * join handler
@@ -67,36 +72,41 @@ io.on("join", (ctx, data) => {
 	}).catch(onError);
 });
 
-io.on("fetch", co.wrap(function* co(ctx, data) {
-	const game = yield db.getGame(data);
-	if (game.error === true) {
-		// something went wrong during load
-		console.log("Something went wrong during game retrieval");
-		io.socket.emit("fetch", JSON.stringify(game));
-		return;
-	}
-	io.socket.emit("fetch", JSON.stringify(game));
-}));
 
-io.on("action", co.wrap(function* co(ctx, data) {
-	let game = yield db.getGame(data);
-	if (game.error === true) {
-		// something went wrong during load
-		console.log("Something went wrong during game retrieval");
+io.on("fetch", (ctx, data) => {
+	co(function* co() {
+		const game = yield db.getGame(data);
+		if (game.error === true) {
+			// something went wrong during load
+			console.log("Something went wrong during game retrieval");
+			io.socket.emit("fetch", JSON.stringify(game));
+			return;
+		}
+		io.socket.emit("fetch", JSON.stringify(game));
+	}).catch(onError);
+});
+
+io.on("action", (ctx, data) => {
+	co(function* co() {
+		let game = yield db.getGame(data);
+		if (game.error === true) {
+			// something went wrong during load
+			console.log("Something went wrong during game retrieval");
+			io.socket.emit("action", JSON.stringify(game));
+			return;
+		}
+		game = model.processAction(data.action, game);
+		if (game.error === true) {
+			// something went wrong during load
+			console.log("Something went wrong during action performing");
+			io.socket.emit("action", JSON.stringify(game));
+			return;
+		}
 		io.socket.emit("action", JSON.stringify(game));
-		return;
-	}
-	game = model.processAction(data.action, game);
-	if (game.error === true) {
-		// something went wrong during load
-		console.log("Something went wrong during action performing");
-		io.socket.emit("action", JSON.stringify(game));
-		return;
-	}
-	io.socket.emit("action", JSON.stringify(game));
-	// TODO: don't actually send out the entire game object, send a pruned version
-	io.broadcast("action", game);
-}));
+		// TODO: don't actually send out the entire game object, send a pruned version
+		io.broadcast("action", game);
+	}).catch(onError);
+});
 
 function onError(err) {
 	console.log("error!");
