@@ -11,7 +11,7 @@ $( document ).ready(function() {
 		 	url: "/api/game", // A valid URL
 		 	data: {players: players}
 	 	}).done(function(result) {
-		 	if (result.errpr === true) {
+		 	if (result.error === true) {
 		 		alert(result.message);
 			 	return console.error(result.message);
 		 	}
