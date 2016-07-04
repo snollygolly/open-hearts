@@ -59,7 +59,7 @@ module.exports = {
 	*/
 	joinGame: (game, player) => {
 		// check to see if the game is full
-		if (game.players.length > game.max_players) {
+		if (game.players.length >= game.max_players) {
 			game.error = true;
 			game.message = "Game is full";
 			return game;
