@@ -5,7 +5,6 @@ const model = require("../models/game");
 
 module.exports = {
 	getGame: function* getGame(id) {
-		console.log("getGame");
 		const game = model.newGame(4);
 		game.id = id;
 		game.error = false;

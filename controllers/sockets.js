@@ -20,38 +20,51 @@ io.on("disconnect", co.wrap(function* co(ctx, data) {
 	console.log("leave event fired", data);
 }));
 
-io.on("join", co.wrap(function* co(ctx, data) {
-	let payload;
-	try {
-		payload = JSON.parse(data);
-	} catch (err) {
-		console.error("bad json");
-		return io.socket.emit("join", {
-			error: true,
-			message: "Bad game object"
-		});
-	}
-	console.log(`payload: ${JSON.stringify(payload)}`);
-	// replace everything but letters, numbers, and spaces
-	const cleanedName = payload.name.replace(/[^a-zA-Z0-9 ]/g, "");
-	let game = yield db.getGame(payload.game);
-	console.log(game);
-	if (game.error === true) {
-		// something went wrong during load
-		console.log("Something went wrong during game retrieval");
-		return io.socket.emit("join", JSON.stringify(game));
-	}
-	// create a player object
-	const player = playerModel.newPlayer(cleanedName);
-	game = gameModel.joinGame(game, player);
-	if (game.error === true) {
-		// something went wrong during load
-		console.log("Something went wrong during joining");
-		return io.socket.emit("join", JSON.stringify(game));
-	}
-	console.log(game);
-	io.socket.emit("join", JSON.stringify(game));
-}));
+/**
+* join handler
+* Listens for players attempting to join a game
+*
+* @param {string} data.game - The game ID
+* @param {string} data.name - The player's name
+* @returns {object} game -  The full game object
+*/
+io.on("join", (ctx, data) => {
+	co(function* co() {
+		let payload;
+		try {
+			payload = JSON.parse(data);
+		} catch (err) {
+			return io.socket.emit("join", {
+				error: true,
+				message: "Bad game object"
+			});
+		}
+		// TODO: this is just because my websocket utility is wacky...i hope
+		try {
+			payload = JSON.parse(payload);
+			console.log("using testing utility");
+		} catch (err) {
+			console.log("not using testing utility");
+		}
+		// replace everything but letters, numbers, and spaces
+		const cleanedName = payload.name.replace(/[^a-zA-Z0-9 ]/g, "");
+		let game = yield db.getGame(payload.game);
+		if (game.error === true) {
+			// something went wrong during load
+			console.log("Something went wrong during game retrieval");
+			return io.socket.emit("join", JSON.stringify(game));
+		}
+		// create a player object
+		const player = playerModel.newPlayer(cleanedName);
+		game = gameModel.joinGame(game, player);
+		if (game.error === true) {
+			// something went wrong during load
+			console.log("Something went wrong during joining");
+			return io.socket.emit("join", JSON.stringify(game));
+		}
+		io.socket.emit("join", JSON.stringify(game));
+	}).catch(onError);
+});
 
 io.on("fetch", co.wrap(function* co(ctx, data) {
 	const game = yield db.getGame(data);
@@ -83,3 +96,8 @@ io.on("action", co.wrap(function* co(ctx, data) {
 	// TODO: don't actually send out the entire game object, send a pruned version
 	io.broadcast("action", game);
 }));
+
+function onError(err) {
+	console.log("error!");
+	console.error(err);
+}
