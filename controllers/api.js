@@ -24,9 +24,10 @@ module.exports.newGame = function* newGame() {
 		this.status = 400;
 		return this.body = {error: true, message: game.message};
 	}
-
-	const result = yield db.createGame(game);
-
+	const result = yield db.saveGame(game);
+	if (result.error === true) {
+		this.status = 400;
+		return this.body = {error: true, message: game.message};
+	}
 	return this.body = result;
-	// TODO: some db stuff happens here
 };
