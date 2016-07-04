@@ -8,20 +8,20 @@ const session = require("../helpers/session");
 
 const co = require("co");
 
-io.on("connection", co(function* co(ctx, data) {
+io.on("connection", co.wrap(function* co(ctx, data) {
 	const players = yield session.connectPlayer(data.id);
 	io.broadcast("connect", players);
 	console.log("join event fired", data);
-}).catch(onError));
+}));
 
-io.on("disconnect", co(function* co(ctx, data) {
+io.on("disconnect", co.wrap(function* co(ctx, data) {
 	const players = yield session.disconnectPlayer(data.id);
 	io.broadcast("disconnect", players);
 	console.log("leave event fired", data);
-}).catch(onError));
+}));
 
-io.on("fetch", co(function* co(ctx, data) {
-	let game = yield db.getGame(data.id);
+io.on("fetch", co.wrap(function* co(ctx, data) {
+	const game = yield db.getGame(data.id);
 	if (game.error === true) {
 		// something went wrong during load
 		console.log("Something went wrong during game retrieval");
@@ -29,9 +29,9 @@ io.on("fetch", co(function* co(ctx, data) {
 		return;
 	}
 	io.socket.emit("fetch", JSON.stringify(game));
-}).catch(onError));
+}));
 
-io.on("action", co(function* co(ctx, data) {
+io.on("action", co.wrap(function* co(ctx, data) {
 	let game = yield db.getGame(data.id);
 	if (game.error === true) {
 		// something went wrong during load
@@ -49,12 +49,4 @@ io.on("action", co(function* co(ctx, data) {
 	io.socket.emit("action", JSON.stringify(game));
 	// TODO: don't actually send out the entire game object, send a pruned version
 	io.broadcast("action", game);
-}).catch(onError));
-
-function onError(err) {
-	// log any uncaught errors
-	// co will not throw any errors you do not handle!!!
-	// HANDLE ALL YOUR ERRORS!!!
-	console.error("socket error...");
-
-}
+}));
