@@ -1,4 +1,13 @@
 YUI().use("node", function(Y) {
+	var socket = io();
+	socket.on('connect', function() {
+		// do something here
+	});
+
+	socket.on('join', function (data) {
+		outputToConsole(data);
+	});
+
 	var COMMANDS = [
 		{
 			name: "startGame",
@@ -57,14 +66,7 @@ YUI().use("node", function(Y) {
 			name: args[1]
 		}
 		var dataJSON = JSON.stringify(dataObj, 2, null);
-		var socket = io();
-		socket.on('connect', function() {
-			socket.emit('join', dataJSON);
-		});
-
-		socket.on('join', function (data) {
-			outputToConsole(data);
-		});
+		socket.emit('join', dataJSON);
 	}
 
 	function outputToConsole(text) {
