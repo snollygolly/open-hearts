@@ -12,7 +12,7 @@ module.exports.index = function* index() {
 module.exports.console = function* console() {
 	yield this.render("console", {
 		title: config.site.name,
-		script: "scripts.min"
+		script: "console"
 	});
 };
 

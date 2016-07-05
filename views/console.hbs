@@ -1,122 +1,34 @@
-<!doctype html>
-<html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-		<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
-		<title>Console</title>
-		<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/combo?3.5.0/build/cssreset/cssreset-min.css"/>
-		<style type="text/css">
-		html {
-			background-color: #000;
-		}
-		body {
-							margin-top: 55px;
-							background-color: #000;
-							font-family: "Lucida Console";
-							font-size: 13px;
-							color: #0f0;
-						}
-						#in {
-							display: block;
-							position: fixed;
-							left: 0;
-							bottom: 0;
-							width: 100%;
-							padding: 8px;
-							border-color: #fff;
-							border-width: 1px 0 0 0;
-							background-color: #000;
-							color: #0f0;
-						}
-						</style>
-					</head>
-					<body>
-						<div id="out"></div>
-						<input id="in" tabindex="0"/>
-					</body>
-					<script type="text/javascript" src="http://yui.yahooapis.com/combo?3.5.0/build/yui/yui-min.js"></script>
-		<script type="text/javasrcipt" src="controllers/sockets.js"></script>
-		<script type="text/javascript">
-		YUI().use("node", function(Y) {
-					var gameObj;
-					var COMMANDS = [
-						{
-							name: "startGame",
-							handler: startGame
-						},
 
-						{
-							name: "joinGame",
-							handler: joinGame
-						}
-					];
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/combo?3.5.0/build/cssreset/cssreset-min.css"/>
+<style type="text/css">
+html {
+	background-color: #000;
+}
+body {
+	margin-top: 55px;
+	background-color: #000;
+	font-family: "Courier";
+	font-size: 16px;
+}
+#in {
+	display: block;
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	padding: 8px;
+	border-color: #fff;
+	border-width: 1px 0 0 0;
+	background-color: #000;
+	color: #0f0;
+}
+p {
+  color: lime;
+}
+</style>
 
-					function processCommand() {
-						var inField = Y.one("#in");
-						var input = inField.get("value");
-						var parts = input.replace(/\s+/g, " ").split(" ");
-						var command = parts[0];
-						var args = parts.length > 1 ? parts.slice(1, parts.length) : [];
+<div id="out"></div>
+<input id="in" tabindex="0"/>
 
-						inField.set("value", "");
-
-						for (var i = 0; i < COMMANDS.length; i++) {
-							if (command === COMMANDS[i].name) {
-								COMMANDS[i].handler(args);
-								return;
-							}
-						}
-
-						outputToConsole("Unsupported Command: " + command);
-					}
-
-					function startGame(args) {
-						outputToConsole("Starting Game...");
-								var players = args;
-								$.ajax({
-									type: 'POST',
-									dataType: 'json',
-									url: "/api/game", // A valid URL
-									data: {players: players}
-								}).done(function(result) {
-									if (result.error === true) {
-										outputToConsole(result.message);
-									}
-									// do something with the success, like show a link
-									outputToConsole("Game Created!");
-									outputToConsole(JSON.stringify(result));
-									gameObj = result;
-								}).fail(function(err) {
-									// do something with the failure, like laugh at the user
-									outputToConsole("Oh no... Something went awry!");
-								});
-							}
-
-						function joinGame(arg1, arg2) {
-
-								var socket = io.connect('http://localhost:2999');
-								socket.on('connect', function() {
-									socket.emit(arg1, arg2, function(data){
-										outputToConsole(data);
-									});
-								});
-
-						}
-
-						function outputToConsole(text) {
-							var p = Y.Node.create("<p>" + text + "</p>");
-							Y.one("#out").append(p);
-							p.scrollIntoView();
-						}
-
-						Y.on("domready", function(e) {
-							Y.one("body").setStyle("paddingBottom", Y.one("#in").get("offsetHeight"));
-							Y.one("#in").on("keydown", function(e) {
-								if (e.charCode === 13) {
-									processCommand();
-								}
-							});
-						});
-					});
-					</script>
-</html>
+<script type="text/javascript" src="http://yui.yahooapis.com/combo?3.5.0/build/yui/yui-min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
