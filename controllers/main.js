@@ -9,6 +9,13 @@ module.exports.index = function* index() {
 	});
 };
 
+module.exports.console = function* console() {
+	yield this.render("console", {
+		title: config.site.name,
+		script: "scripts.min"
+	});
+};
+
 module.exports.game = function* game() {
 	if (this.params.id !== null) {
 		// Check DB to see if lobby exists
