@@ -45,30 +45,29 @@ const Hand = React.createClass({
     console.log("card played...");
   },
   render: function() {
-    let cards = [];
-    var cardStyles;
-    var cardCount = Object.keys(this.state.hand).length,
-      cardWidth = this.state.maxHandWidth / cardCount,
-      cardSign = cardWidth / 4;
+    let cards = [],
+        cardStyles,
+        cardCount = Object.keys(this.state.hand).length,
+        cardWidth = this.state.maxHandWidth / cardCount,
+        cardSign = cardWidth / 4;
 
     if (this.state.hand !== null) {
       cards = this.state.hand.map((result) => {
         var trans = "translateX(-" + ((result.key === 1) ? "0" : (((result.key - 1) * cardWidth) - cardSign * (result.key - 1))) + "px)";
-
         cardStyles = {
             transform : trans,
             zIndex : result.key,
         };
-
         return <Card key={ result.key } style={ cardStyles } name={ result.name } imgWidth={ cardWidth } />
       });
     }
+
     var handWidth = (cardCount - 1) * cardSign + cardWidth;
     var innerStyle = {
       width : handWidth,
       display : "flex"
     };
-
+    
     return (
       <div className={ this.props.location + 'Cards' }>
         <div style = {innerStyle}>
