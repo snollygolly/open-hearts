@@ -1,5 +1,9 @@
 YUI().use("node", function(Y) {
 	var lastCommand;
+	var lastGameId;
+	var gamePlayers = [];
+	var dataObj;
+	var fetchState = false;
 
 	var socket = io();
 	socket.on('connect', function() {
@@ -7,7 +11,23 @@ YUI().use("node", function(Y) {
 	});
 
 	socket.on('join', function (data) {
-		outputToConsole(data);
+			const payload = JSON.parse(data);
+			outputToConsole("Joined Game : " + JSON.stringify(payload._id));
+			outputToConsole(" <br> ");
+			for (let i = 0; i < payload.players.length; i++) {
+				outputToConsole("Player" + (i+1));
+				outputToConsole(JSON.stringify(payload.players[i]));
+				outputToConsole(" <br> ");
+			}
+	});
+
+	socket.on('fetch', function (data) {
+		var info = data;
+		if(fetchState == true) {
+			var payload = JSON.parse(info);
+			info = "Game state : " + payload.state;
+		}
+		outputToConsole(info);
 		outputToConsole(" <br> ");
 	});
 
@@ -30,7 +50,17 @@ YUI().use("node", function(Y) {
 		{
 			name: "help",
 			handler: help
-		}
+		},
+
+		{
+			name: "fetch",
+			handler: fetch
+		},
+
+		{
+			name: "getState",
+			handler: getState
+		},
 	];
 
 	function processCommand() {
@@ -53,9 +83,13 @@ YUI().use("node", function(Y) {
 	}
 
 	function startGame(args) {
+		var info = args;
+		if (args.length == 0) {
+			info = 4;
+		}
 		outputToConsole("Starting Game...");
 		outputToConsole(" <br> ");
-		var players = args;
+		var players = info;
 		$.ajax({
 			type: 'POST',
 			dataType: 'json',
@@ -70,6 +104,7 @@ YUI().use("node", function(Y) {
 			outputToConsole("Game Created!");
 			outputToConsole(JSON.stringify(result));
 			outputToConsole(" <br> ");
+			lastGameId = result.id;
 		}).fail(function(err) {
 			// do something with the failure, like laugh at the user
 			outputToConsole("Oh no... Something went awry!");
@@ -78,13 +113,19 @@ YUI().use("node", function(Y) {
 	}
 
 	function joinGame(args) {
-		var dataObj = {
+		dataObj = {
 			game: args[0],
 			name: args[1]
+	}
+		if (args.length == 1) {
+			dataObj = {
+				game: lastGameId,
+				name: args[0]
+			}
 		}
 		var dataJSON = JSON.stringify(dataObj, 2, null);
 		socket.emit('join', dataJSON);
-		outputToConsole("Joining requested game as : " + args[1])
+		outputToConsole("Joining requested game as : " + JSON.stringify(dataObj.name))
 		outputToConsole(" <br> ");
 	}
 
@@ -92,11 +133,43 @@ YUI().use("node", function(Y) {
 		$("#out").empty();
 	}
 
+	function fetch(args) {
+		fetchState = false;
+		var info = args;
+		if (args.length == 0){
+			info = lastGameId;
+		}
+		socket.emit('fetch', info);
+	}
+
+	function getState(args) {
+		fetchState = true;
+		var info = args;
+		if (args.length == 0){
+			info = lastGameId;
+		}
+		socket.emit('fetch', info);
+	}
+
 	function help() {
-				outputToConsole("startGame @val : starts a game with @val number of players.");
-				outputToConsole("joinGame @val1 @val2 : joins a game with id of @val1 and sets user name to @val2");
-				outputToConsole("clear : refreshes the console and clears everything in it");
-				outputToConsole(" <br> ");
+		outputToConsole("startGame : starts a game with 4 players.");
+		outputToConsole(" <br> ");
+		outputToConsole("startGame @val : starts a game with @val number of players.");
+		outputToConsole(" <br> ");
+		outputToConsole("joinGame @val1 : joins the last created game and sets username to @val1");
+		outputToConsole(" <br> ");
+		outputToConsole("joinGame @val1 @val2 : joins a game with id of @val1 and sets user name to @val2");
+		outputToConsole(" <br> ");
+		outputToConsole("fetch : gets the information of the last made game");
+		outputToConsole(" <br> ");
+		outputToConsole("fetch @val1 : gets the information for game with id of @val1");
+		outputToConsole(" <br> ");
+		outputToConsole("getState : gets the state of the last made game");
+		outputToConsole(" <br> ");
+		outputToConsole("getState @val1 : gets the state for game with id of @val1");
+		outputToConsole(" <br> ");
+		outputToConsole("clear : clears everything in the console screen");
+		outputToConsole(" <br> ");
 	}
 
 	function outputToConsole(text) {
