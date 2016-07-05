@@ -10,7 +10,19 @@ const Game = React.createClass({
   },
   getInitialState: function() {
     return {
-      socket: null
+      socket: null,
+      hand : [
+        "bottom",
+        "left",
+        "top",
+        "right"
+      ],
+      cardSigns : [
+        "2H",
+        "3H",
+        "4H",
+        "5H",
+      ],
     };
   },
   componentWillMount: function() {
@@ -48,44 +60,27 @@ const Game = React.createClass({
     console.log(err);
   },
   render: function() {
+    var hands = this.state.hand.map((val) =>{
+        return(
+            <div className = {(val + "Hand")} key = {this.state.hand.indexOf(val)}>
+                <Hand location = {val}/>
+            </div>
+        );
+    });
+    var playAreas = this.state.hand.map((val) => {
+        var loc = this.state.hand.indexOf(val);
+        return(
+            <div className = {(val + "PlayArea")} key = {((loc+1)*10)}>
+                <div className = {(val + "PlayCard")}>
+                    <Card name = {(this.state.cardSigns[loc])}/>
+                </div>
+            </div>
+        );
+    });
     return (
       <div>
-        <div className="bottomHand">
-          <Hand location="bottom" />
-        </div>
-        <div className="leftHand">
-          <Hand location="left" />    
-        </div>
-        <div className="topHand">
-          <Hand location="top" />     
-        </div>
-        <div className="rightHand">
-          <Hand location="right" />   
-        </div>
-
-        <div className="bottomPlayArea">
-          <div className="bottomPlayCard">
-            <Card name="2H" />
-          </div>
-        </div>
-
-        <div className="leftPlayArea">
-          <div className="leftPlayCard">
-            <Card name="3H" />
-          </div>
-        </div>
-
-        <div className="topPlayArea">
-          <div className="topPlayCard">
-            <Card name="4H" />
-          </div>
-        </div>
-
-        <div className="rightPlayArea">
-          <div className="rightPlayCard">
-            <Card name="5H" />
-          </div>
-        </div>
+        {hands}
+        {playAreas}
       </div>
     );
   }
