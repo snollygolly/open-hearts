@@ -5,7 +5,9 @@ import CardBackList from '../../../../models/data/cardBacks.json';
 
 const Card = React.createClass({
   propTypes: {
-    name: React.PropTypes.string
+    name: React.PropTypes.string,
+    style: React.PropTypes.object,
+    imgWidth: React.PropTypes.number
   },
   getInitialState: function () {
     return {
@@ -20,9 +22,13 @@ const Card = React.createClass({
     });
   },
   render: function () {
+    var imgStyle = {
+        width : this.props.imgWidth
+    }
+    
     return (
-      <div>
-        <img src={ this.state.card }></img>
+      <div style = {this.props.style}>
+        <img src={ this.state.card } style={ imgStyle }></img>
       </div>
     );
   }
