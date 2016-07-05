@@ -1,4 +1,6 @@
 YUI().use("node", function(Y) {
+	var lastCommand;
+
 	var socket = io();
 	socket.on('connect', function() {
 		// do something here
@@ -6,6 +8,7 @@ YUI().use("node", function(Y) {
 
 	socket.on('join', function (data) {
 		outputToConsole(data);
+		outputToConsole(" <br> ");
 	});
 
 	var COMMANDS = [
@@ -17,6 +20,16 @@ YUI().use("node", function(Y) {
 		{
 			name: "joinGame",
 			handler: joinGame
+		},
+
+		{
+			name: "clear",
+			handler: clear
+		},
+
+		{
+			name: "help",
+			handler: help
 		}
 	];
 
@@ -41,6 +54,7 @@ YUI().use("node", function(Y) {
 
 	function startGame(args) {
 		outputToConsole("Starting Game...");
+		outputToConsole(" <br> ");
 		var players = args;
 		$.ajax({
 			type: 'POST',
@@ -50,13 +64,16 @@ YUI().use("node", function(Y) {
 		}).done(function(result) {
 			if (result.error === true) {
 				outputToConsole(result.message);
+				outputToConsole(" <br> ");
 			}
 			// do something with the success, like show a link
 			outputToConsole("Game Created!");
 			outputToConsole(JSON.stringify(result));
+			outputToConsole(" <br> ");
 		}).fail(function(err) {
 			// do something with the failure, like laugh at the user
 			outputToConsole("Oh no... Something went awry!");
+			outputToConsole(" <br> ");
 		});
 	}
 
@@ -67,6 +84,19 @@ YUI().use("node", function(Y) {
 		}
 		var dataJSON = JSON.stringify(dataObj, 2, null);
 		socket.emit('join', dataJSON);
+		outputToConsole("Joining requested game as : " + args[1])
+		outputToConsole(" <br> ");
+	}
+
+	function clear() {
+		$("#out").empty();
+	}
+
+	function help() {
+				outputToConsole("startGame @val : starts a game with @val number of players.");
+				outputToConsole("joinGame @val1 @val2 : joins a game with id of @val1 and sets user name to @val2");
+				outputToConsole("clear : refreshes the console and clears everything in it");
+				outputToConsole(" <br> ");
 	}
 
 	function outputToConsole(text) {
@@ -79,7 +109,11 @@ YUI().use("node", function(Y) {
 		Y.one("body").setStyle("paddingBottom", Y.one("#in").get("offsetHeight"));
 		Y.one("#in").on("keydown", function(e) {
 			if (e.charCode === 13) {
+				lastCommand = $("#in").val();
 				processCommand();
+			}
+			else if (e.charCode === 38) {
+				$("#in").val(lastCommand);
 			}
 		});
 	});
