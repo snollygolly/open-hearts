@@ -35,10 +35,9 @@
 						<input id="in" tabindex="0"/>
 					</body>
 					<script type="text/javascript" src="http://yui.yahooapis.com/combo?3.5.0/build/yui/yui-min.js"></script>
-		<script type="text/javasrcipt" src="controllers/sockets.js"></script>
+		<script src="/socket.io/socket.io.js"></script>
 		<script type="text/javascript">
 		YUI().use("node", function(Y) {
-					var gameObj;
 					var COMMANDS = [
 						{
 							name: "startGame",
@@ -85,22 +84,26 @@
 									// do something with the success, like show a link
 									outputToConsole("Game Created!");
 									outputToConsole(JSON.stringify(result));
-									gameObj = result;
 								}).fail(function(err) {
 									// do something with the failure, like laugh at the user
 									outputToConsole("Oh no... Something went awry!");
 								});
 							}
 
-						function joinGame(arg1, arg2) {
-
-								var socket = io.connect('http://localhost:2999');
+						function joinGame(args) {
+								var dataObj = {
+									game: args[0],
+									name: args[1]
+								}
+								var dataJSON = JSON.stringify(dataObj, 2, null);
+								var socket = io();
 								socket.on('connect', function() {
-									socket.emit(arg1, arg2, function(data){
-										outputToConsole(data);
-									});
+									socket.emit('join', dataJSON);
 								});
 
+								socket.on('join', function (data) {
+									outputToConsole(data);
+								});
 						}
 
 						function outputToConsole(text) {
