@@ -27,6 +27,20 @@ npm start
 
 * Enjoy!
 
+### Tests
+
+There's a number of tests written against basic functionality of the backend.  They can be found in the `tests` folder.
+
+* Running tests
+```
+npm test
+```
+
+* Generating code coverage
+```
+npm run coverage
+```
+
 ### Setting up front-end development environment
 
 * Build javascript into bundle
