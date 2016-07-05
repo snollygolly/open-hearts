@@ -142,3 +142,143 @@ describe("Trick Model - Determine Winner [Heavy Mixed Cards]", () => {
 		return done();
 	});
 });
+
+describe("Trick Model - Score Trick [Single Heart]", () => {
+	before(() => {
+		trick = [
+			{
+				id: "A",
+				card: "9H"
+			},
+			{
+				id: "B",
+				card: "6C"
+			},
+			{
+				id: "C",
+				card: "10C"
+			},
+			{
+				id: "D",
+				card: "8D"
+			}
+		];
+		winner = trickModel.scoreTrick(trick);
+	});
+
+	it("score should be a valid number", (done) => {
+		expect(score).to.be.a("number");
+		expect(score).to.be.at.least(0);
+		return done();
+	});
+
+	it("score should be correct", (done) => {
+		expect(score).to.equal(1);
+		return done();
+	});
+});
+
+describe("Trick Model - Score Trick [Mostly Hearts]", () => {
+	before(() => {
+		trick = [
+			{
+				id: "A",
+				card: "9H"
+			},
+			{
+				id: "B",
+				card: "6H"
+			},
+			{
+				id: "C",
+				card: "10C"
+			},
+			{
+				id: "D",
+				card: "8H"
+			}
+		];
+		winner = trickModel.scoreTrick(trick);
+	});
+
+	it("score should be a valid number", (done) => {
+		expect(score).to.be.a("number");
+		expect(score).to.be.at.least(0);
+		return done();
+	});
+
+	it("score should be correct", (done) => {
+		expect(score).to.equal(3);
+		return done();
+	});
+});
+
+describe("Trick Model - Score Trick [Queen Only]", () => {
+	before(() => {
+		trick = [
+			{
+				id: "A",
+				card: "9C"
+			},
+			{
+				id: "B",
+				card: "6C"
+			},
+			{
+				id: "C",
+				card: "QS"
+			},
+			{
+				id: "D",
+				card: "8C"
+			}
+		];
+		winner = trickModel.scoreTrick(trick);
+	});
+
+	it("score should be a valid number", (done) => {
+		expect(score).to.be.a("number");
+		expect(score).to.be.at.least(0);
+		return done();
+	});
+
+	it("score should be correct", (done) => {
+		expect(score).to.equal(13);
+		return done();
+	});
+});
+
+describe("Trick Model - Score Trick [Mixed]", () => {
+	before(() => {
+		trick = [
+			{
+				id: "A",
+				card: "9H"
+			},
+			{
+				id: "B",
+				card: "6H"
+			},
+			{
+				id: "C",
+				card: "QS"
+			},
+			{
+				id: "D",
+				card: "8H"
+			}
+		];
+		winner = trickModel.scoreTrick(trick);
+	});
+
+	it("score should be a valid number", (done) => {
+		expect(score).to.be.a("number");
+		expect(score).to.be.at.least(0);
+		return done();
+	});
+
+	it("score should be correct", (done) => {
+		expect(score).to.equal(16);
+		return done();
+	});
+});
