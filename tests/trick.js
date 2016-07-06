@@ -17,7 +17,7 @@ describe("Trick Model - Determine Winner [Simple Numbers]", () => {
 			},
 			{
 				id: "LOSER2",
-				card: "6H"
+				card: "10S"
 			},
 			{
 				id: "WINNER",
