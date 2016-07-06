@@ -3,6 +3,8 @@ An open source version of the card game Hearts.
 
 ## Prerequisites
 * [Node.js](https://nodejs.org/en/) (Version 5 and up recommended)
+* [Redis](http://redis.io/)
+* [CouchDB](http://couchdb.apache.org/)
 
 ### Installation
 
