@@ -69,5 +69,27 @@ module.exports = {
 		// add him to the players array
 		game.players.push(player);
 		return game;
+	},
+	/**
+	* leaveGame
+	* Removes a player from a game
+	*
+	* @param {string} game - The full game object
+	* @param {array} player - The player being removed
+	* @returns {object} game -  The full game object
+	*/
+	leaveGame: (game, player) => {
+		// loop through all the players
+		for (const seat of game.players) {
+			if (seat.id === player.id) {
+				seat.id = null;
+				seat.name = null;
+				seat.token = null;
+				return game;
+			}
+		}
+		game.error = true;
+		game.message = "Game is full";
+		return game;
 	}
 };
