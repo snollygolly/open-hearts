@@ -10,7 +10,7 @@ const Chance = require("chance");
 const chance = new Chance();
 
 const deckModel = require("./deck");
-const handModel = require("./hands");
+const handModel = require("./hand");
 const playerModel = require("./player");
 
 module.exports = {
