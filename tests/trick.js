@@ -6,6 +6,7 @@ const trickModel = require("../models/trick");
 
 let trick;
 let winner;
+let score;
 
 describe("Trick Model - Determine Winner [Simple Numbers]", () => {
 	before(() => {
@@ -163,7 +164,7 @@ describe("Trick Model - Score Trick [Single Heart]", () => {
 				card: "8D"
 			}
 		];
-		winner = trickModel.scoreTrick(trick);
+		score = trickModel.scoreTrick(trick);
 	});
 
 	it("score should be a valid number", (done) => {
@@ -198,7 +199,7 @@ describe("Trick Model - Score Trick [Mostly Hearts]", () => {
 				card: "8H"
 			}
 		];
-		winner = trickModel.scoreTrick(trick);
+		score = trickModel.scoreTrick(trick);
 	});
 
 	it("score should be a valid number", (done) => {
@@ -233,7 +234,7 @@ describe("Trick Model - Score Trick [Queen Only]", () => {
 				card: "8C"
 			}
 		];
-		winner = trickModel.scoreTrick(trick);
+		score = trickModel.scoreTrick(trick);
 	});
 
 	it("score should be a valid number", (done) => {
@@ -268,7 +269,7 @@ describe("Trick Model - Score Trick [Mixed]", () => {
 				card: "8H"
 			}
 		];
-		winner = trickModel.scoreTrick(trick);
+		score = trickModel.scoreTrick(trick);
 	});
 
 	it("score should be a valid number", (done) => {
