@@ -181,6 +181,7 @@ describe("Game Model - Leave Game", () => {
 	it("game should have the no personal information about the old player", (done) => {
 		expect(newGame.players[0].id).to.equal(null);
 		expect(newGame.players[0].name).to.equal(null);
+		expect(newGame.players[0].socket).to.equal(null);
 		return done();
 	});
 });

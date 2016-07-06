@@ -7,25 +7,51 @@ const socket = app._io;
 const db = require("../helpers/db");
 const gameModel = require("../models/game");
 const playerModel = require("../models/player");
+const session = require("../helpers/session");
 
 const co = require("co");
 
 io.on("connection", (ctx, data) => {
 	// eslint-disable-next-line require-yield
 	co(function* co() {
-		console.log("join event fired", data);
+		console.log(`*${data} connected`);
 	}).catch(onError);
 });
 
 io.on("disconnect", (ctx, data) => {
 	// eslint-disable-next-line require-yield
 	co(function* co() {
-		// const playerID = playerModel.getIDFromSocket(game, data);
-		// if (playerID !== false) {
-		// 	// this player is currently in this game
-		//
-		// }
-		console.log("leave event fired", data);
+		console.log(`*${ctx.socket.id} disconnected`);
+		const gameID = yield session.getValue(ctx.socket.id);
+		if (gameID === false) {
+
+			return;
+		}
+		// get the game from the db
+		let game = yield db.getGame(gameID);
+		if (game.error === true) {
+			// something went wrong during load
+			console.log("Something went wrong during game retrieval");
+			return;
+		}
+		const playerID = playerModel.getIDFromSocket(game, ctx.socket.id);
+		if (playerID !== false) {
+			// this player is currently in this game
+			// TODO: this is clunky but i'm tired, this needs work
+			game = gameModel.leaveGame(game, {id: playerID});
+			if (game.error === true) {
+				console.log("Something went wrong during game leaving");
+				return;
+			}
+			// remove this user from redis
+			session.deleteValue(ctx.socket.id);
+			game = yield db.saveGame(game);
+			if (game.error === true) {
+				// something went wrong during load
+				console.log("Something went wrong during saving");
+				return;
+			}
+		}
 	}).catch(onError);
 });
 
@@ -60,6 +86,8 @@ io.on("join", (ctx, data) => {
 			console.log("Something went wrong during joining");
 			return socket.emit("join", JSON.stringify(game));
 		}
+		// store this in the session
+		session.setValue(player.socket, game.id);
 		game = yield db.saveGame(game);
 		if (game.error === true) {
 			// something went wrong during load
