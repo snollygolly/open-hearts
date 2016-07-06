@@ -63,6 +63,7 @@ module.exports = {
 			if (seat.id === null) {
 				seat.id = player.id;
 				seat.name = player.name;
+				seat.socket = player.socket;
 				return game;
 			}
 		}
@@ -92,11 +93,12 @@ module.exports = {
 			if (seat.id === player.id) {
 				seat.id = null;
 				seat.name = null;
+				seat.socket = null;
 				return game;
 			}
 		}
 		game.error = true;
-		game.message = "Game is full";
+		game.message = "This player isn't in this game";
 		return game;
 	}
 };
