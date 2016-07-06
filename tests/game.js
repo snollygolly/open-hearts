@@ -89,6 +89,35 @@ describe("Game Model - Join Game", () => {
 	});
 });
 
+describe("Game Model - Join Game [Rejoin]", () => {
+	before(() => {
+		// TODO: make this work with more than 4
+		game = gameModel.newGame(4);
+		player = playerModel.newPlayer("Test");
+		oldGame = gameModel.joinGame(game, player);
+		const leftGame = gameModel.leaveGame(oldGame, player);
+		player = playerModel.newPlayer("Test");
+		newGame = gameModel.joinGame(leftGame, player);
+	});
+
+	it("game should be a valid object", (done) => {
+		expect(newGame).to.not.be.an("undefined");
+		expect(newGame).to.be.an("object");
+		return done();
+	});
+
+	it("game should have the right number of players", (done) => {
+		expect(newGame.players.length).to.equal(1);
+		return done();
+	});
+
+	it("game should have the right name for the new player", (done) => {
+		const newPlayer = newGame.players[newGame.players.length - 1];
+		expect(newPlayer.name).to.equal("Test");
+		return done();
+	});
+});
+
 describe("Game Model - Join Game [Full]", () => {
 	before(() => {
 		// TODO: make this work with more than 4
@@ -152,7 +181,6 @@ describe("Game Model - Leave Game", () => {
 	it("game should have the no personal information about the old player", (done) => {
 		expect(newGame.players[0].id).to.equal(null);
 		expect(newGame.players[0].name).to.equal(null);
-		expect(newGame.players[0].token).to.equal(null);
 		return done();
 	});
 });

@@ -58,6 +58,14 @@ module.exports = {
 	* @returns {object} game -  The full game object
 	*/
 	joinGame: (game, player) => {
+		// loop through all the players
+		for (const seat of game.players) {
+			if (seat.id === null) {
+				seat.id = player.id;
+				seat.name = player.name;
+				return game;
+			}
+		}
 		// check to see if the game is full
 		if (game.players.length >= game.max_players) {
 			game.error = true;
@@ -84,7 +92,6 @@ module.exports = {
 			if (seat.id === player.id) {
 				seat.id = null;
 				seat.name = null;
-				seat.token = null;
 				return game;
 			}
 		}
