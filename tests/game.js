@@ -89,6 +89,35 @@ describe("Game Model - Join Game", () => {
 	});
 });
 
+describe("Game Model - Join Game [Rejoin]", () => {
+	before(() => {
+		// TODO: make this work with more than 4
+		game = gameModel.newGame(4);
+		player = playerModel.newPlayer("Test");
+		oldGame = gameModel.joinGame(game, player);
+		const leftGame = gameModel.leaveGame(oldGame, player);
+		player = playerModel.newPlayer("Test");
+		newGame = gameModel.joinGame(leftGame, player);
+	});
+
+	it("game should be a valid object", (done) => {
+		expect(newGame).to.not.be.an("undefined");
+		expect(newGame).to.be.an("object");
+		return done();
+	});
+
+	it("game should have the right number of players", (done) => {
+		expect(newGame.players.length).to.equal(1);
+		return done();
+	});
+
+	it("game should have the right name for the new player", (done) => {
+		const newPlayer = newGame.players[newGame.players.length - 1];
+		expect(newPlayer.name).to.equal("Test");
+		return done();
+	});
+});
+
 describe("Game Model - Join Game [Full]", () => {
 	before(() => {
 		// TODO: make this work with more than 4
@@ -125,6 +154,53 @@ describe("Game Model - Process Action", () => {
 	it("game should be a valid object", (done) => {
 		expect(newGame).to.not.be.an("undefined");
 		expect(newGame).to.be.an("object");
+		return done();
+	});
+});
+
+describe("Game Model - Leave Game", () => {
+	before(() => {
+		// TODO: make this work with more than 4
+		game = gameModel.newGame(4);
+		player = playerModel.newPlayer("Test");
+		oldGame = gameModel.joinGame(game, player);
+		newGame = gameModel.leaveGame(oldGame, player);
+	});
+
+	it("game should be a valid object", (done) => {
+		expect(newGame).to.not.be.an("undefined");
+		expect(newGame).to.be.an("object");
+		return done();
+	});
+
+	it("game should have the right number of players", (done) => {
+		expect(newGame.players.length).to.equal(1);
+		return done();
+	});
+
+	it("game should have the no personal information about the old player", (done) => {
+		expect(newGame.players[0].id).to.equal(null);
+		expect(newGame.players[0].name).to.equal(null);
+		expect(newGame.players[0].socket).to.equal(null);
+		return done();
+	});
+});
+
+describe("Game Model - Leave Game [Not In Game]", () => {
+	before(() => {
+		game = gameModel.newGame(4);
+		player = playerModel.newPlayer("Test");
+		newGame = gameModel.leaveGame(game, player);
+	});
+
+	it("game should be a valid object", (done) => {
+		expect(newGame).to.not.be.an("undefined");
+		expect(newGame).to.be.an("object");
+		return done();
+	});
+
+	it("game should have an error", (done) => {
+		expect(newGame.error).to.equal(true);
 		return done();
 	});
 });

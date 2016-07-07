@@ -10,7 +10,7 @@ const Chance = require("chance");
 const chance = new Chance();
 
 const deckModel = require("./deck");
-const handModel = require("./hands");
+const handModel = require("./hand");
 const playerModel = require("./player");
 
 module.exports = {
@@ -58,6 +58,15 @@ module.exports = {
 	* @returns {object} game -  The full game object
 	*/
 	joinGame: (game, player) => {
+		// loop through all the players
+		for (const seat of game.players) {
+			if (seat.id === null) {
+				seat.id = player.id;
+				seat.name = player.name;
+				seat.socket = player.socket;
+				return game;
+			}
+		}
 		// check to see if the game is full
 		if (game.players.length >= game.max_players) {
 			game.error = true;
@@ -68,6 +77,28 @@ module.exports = {
 		player.hand = game.hands.pop();
 		// add him to the players array
 		game.players.push(player);
+		return game;
+	},
+	/**
+	* leaveGame
+	* Removes a player from a game
+	*
+	* @param {string} game - The full game object
+	* @param {array} player - The player being removed
+	* @returns {object} game -  The full game object
+	*/
+	leaveGame: (game, player) => {
+		// loop through all the players
+		for (const seat of game.players) {
+			if (seat.id === player.id) {
+				seat.id = null;
+				seat.name = null;
+				seat.socket = null;
+				return game;
+			}
+		}
+		game.error = true;
+		game.message = "This player isn't in this game";
 		return game;
 	}
 };

@@ -6,7 +6,6 @@ const koa = require("koa");
 const hbs = require("koa-hbs");
 const serve = require("koa-static-folder");
 
-const session = require("koa-generic-session");
 const bodyParser = require("koa-bodyparser");
 
 const app = koa();
@@ -27,10 +26,6 @@ require("./helpers/handlebars");
 
 // trust proxy
 app.proxy = true;
-
-// sessions
-app.keys = [config.site.secret];
-app.use(session());
 
 // body parser
 app.use(bodyParser());

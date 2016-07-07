@@ -3,6 +3,8 @@ An open source version of the card game Hearts.
 
 ## Prerequisites
 * [Node.js](https://nodejs.org/en/) (Version 5 and up recommended)
+* [Redis](http://redis.io/)
+* [CouchDB](http://couchdb.apache.org/)
 
 ### Installation
 
@@ -26,6 +28,20 @@ npm start
 ```
 
 * Enjoy!
+
+### Tests
+
+There's a number of tests written against basic functionality of the backend.  They can be found in the `tests` folder.
+
+* Running tests
+```
+npm test
+```
+
+* Generating code coverage
+```
+npm run coverage
+```
 
 ### Setting up front-end development environment
 

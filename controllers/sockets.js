@@ -3,23 +3,55 @@
 const config = require("../config.json");
 const app = require("../index").app;
 const io = app.io;
+const socket = app._io;
 const db = require("../helpers/db");
 const gameModel = require("../models/game");
 const playerModel = require("../models/player");
+const session = require("../helpers/session");
 
 const co = require("co");
 
 io.on("connection", (ctx, data) => {
 	// eslint-disable-next-line require-yield
 	co(function* co() {
-		console.log("join event fired", data);
+		console.log(`*${data} connected`);
 	}).catch(onError);
 });
 
 io.on("disconnect", (ctx, data) => {
 	// eslint-disable-next-line require-yield
 	co(function* co() {
-		console.log("leave event fired", data);
+		console.log(`*${ctx.socket.id} disconnected`);
+		const gameID = yield session.getValue(ctx.socket.id);
+		if (gameID === false) {
+
+			return;
+		}
+		// get the game from the db
+		let game = yield db.getGame(gameID);
+		if (game.error === true) {
+			// something went wrong during load
+			console.log("Something went wrong during game retrieval");
+			return;
+		}
+		const playerID = playerModel.getIDFromSocket(game, ctx.socket.id);
+		if (playerID !== false) {
+			// this player is currently in this game
+			// TODO: this is clunky but i'm tired, this needs work
+			game = gameModel.leaveGame(game, {id: playerID});
+			if (game.error === true) {
+				console.log("Something went wrong during game leaving");
+				return;
+			}
+			// remove this user from redis
+			session.deleteValue(ctx.socket.id);
+			game = yield db.saveGame(game);
+			if (game.error === true) {
+				// something went wrong during load
+				console.log("Something went wrong during saving");
+				return;
+			}
+		}
 	}).catch(onError);
 });
 
@@ -36,32 +68,35 @@ io.on("join", (ctx, data) => {
 	co(function* co() {
 		const payload = parsePayload(data);
 		if (payload.error === true) {
-			return io.socket.emit("join", JSON.stringify(payload));
+			return socket.emit("join", JSON.stringify(payload));
 		}
 		// replace everything but letters, numbers, and spaces
 		const cleanedName = payload.name.replace(/[^a-zA-Z0-9 ]/g, "");
 		let game = yield db.getGame(payload.game);
-		console.log(game);
 		if (game.error === true) {
 			// something went wrong during load
 			console.log("Something went wrong during game retrieval");
-			return io.socket.emit("join", JSON.stringify(game));
+			return socket.emit("join", JSON.stringify(game));
 		}
 		// create a player object
-		const player = playerModel.newPlayer(cleanedName);
+		const player = playerModel.newPlayer(cleanedName, ctx.socket.id);
 		game = gameModel.joinGame(game, player);
 		if (game.error === true) {
 			// something went wrong during load
 			console.log("Something went wrong during joining");
-			return io.socket.emit("join", JSON.stringify(game));
+			return socket.emit("join", JSON.stringify(game));
 		}
+		// store this in the session
+		session.setValue(player.socket, game.id);
 		game = yield db.saveGame(game);
 		if (game.error === true) {
 			// something went wrong during load
 			console.log("Something went wrong during saving");
-			return io.socket.emit("join", JSON.stringify(game));
+			return socket.emit("join", JSON.stringify(game));
 		}
-		io.socket.emit("join", JSON.stringify(game));
+		// to send to an individual user...
+		// socket.to(player.socket).emit("join", JSON.stringify(game));
+		socket.emit("join", JSON.stringify(game));
 	}).catch(onError);
 });
 
@@ -72,10 +107,10 @@ io.on("fetch", (ctx, data) => {
 		if (game.error === true) {
 			// something went wrong during load
 			console.log("Something went wrong during game retrieval");
-			io.socket.emit("fetch", JSON.stringify(game));
+			socket.emit("fetch", JSON.stringify(game));
 			return;
 		}
-		io.socket.emit("fetch", JSON.stringify(game));
+		socket.emit("fetch", JSON.stringify(game));
 	}).catch(onError);
 });
 
@@ -85,17 +120,17 @@ io.on("action", (ctx, data) => {
 		if (game.error === true) {
 			// something went wrong during load
 			console.log("Something went wrong during game retrieval");
-			io.socket.emit("action", JSON.stringify(game));
+			socket.emit("action", JSON.stringify(game));
 			return;
 		}
 		game = model.processAction(data.action, game);
 		if (game.error === true) {
 			// something went wrong during load
 			console.log("Something went wrong during action performing");
-			io.socket.emit("action", JSON.stringify(game));
+			socket.emit("action", JSON.stringify(game));
 			return;
 		}
-		io.socket.emit("action", JSON.stringify(game));
+		socket.emit("action", JSON.stringify(game));
 		// TODO: don't actually send out the entire game object, send a pruned version
 	}).catch(onError);
 });
