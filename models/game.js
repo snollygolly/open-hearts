@@ -53,8 +53,8 @@ module.exports = {
 	* joinGame
 	* Attempts to join a game
 	*
-	* @param {string} game - The full game object
-	* @param {array} player - The player trying to join
+	* @param {object} game - The full game object
+	* @param {object} player - The player trying to join
 	* @returns {object} game -  The full game object
 	*/
 	joinGame: (game, player) => {
@@ -83,8 +83,8 @@ module.exports = {
 	* leaveGame
 	* Removes a player from a game
 	*
-	* @param {string} game - The full game object
-	* @param {array} player - The player being removed
+	* @param {object} game - The full game object
+	* @param {object} player - The player being removed
 	* @returns {object} game -  The full game object
 	*/
 	leaveGame: (game, player) => {
@@ -99,6 +99,30 @@ module.exports = {
 		}
 		game.error = true;
 		game.message = "This player isn't in this game";
+		return game;
+	},
+	/**
+	* readyCheck
+	* Checks to see if a game is ready to start, and starts it if it is
+	*
+	* @param {object} game - The full game object
+	* @returns {object} game -  The full game object
+	*/
+	readyCheck: (game) => {
+		// check to see if the game is full
+		if (game.players.length < game.max_players) {
+			game.state = "waiting";
+			return game;
+		}
+		// loop through all the players
+		for (const seat of game.players) {
+			if (seat.id === null) {
+				game.state = "waiting";
+				return game;
+			}
+		}
+		// both "empty" checks failed, must be full
+		game.state = "passing";
 		return game;
 	}
 };

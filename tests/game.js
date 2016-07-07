@@ -204,3 +204,67 @@ describe("Game Model - Leave Game [Not In Game]", () => {
 		return done();
 	});
 });
+
+describe("Game Model - Ready Check [Not Full]", () => {
+	before(() => {
+		game = gameModel.newGame(4);
+		newGame = gameModel.readyCheck(game);
+	});
+
+	it("game should be a valid object", (done) => {
+		expect(newGame).to.not.be.an("undefined");
+		expect(newGame).to.be.an("object");
+		return done();
+	});
+
+	it("game should have the correct state", (done) => {
+		expect(newGame.state).to.equal("waiting");
+		return done();
+	});
+});
+
+describe("Game Model - Ready Check [Full - Empty Player]", () => {
+	before(() => {
+		game = gameModel.newGame(4);
+		player = playerModel.newPlayer("Test");
+		// add an invalid player object at the end to simulate a player that left
+		game.players = [
+			player, player, player, {id: null}
+		];
+		newGame = gameModel.readyCheck(game);
+	});
+
+	it("game should be a valid object", (done) => {
+		expect(newGame).to.not.be.an("undefined");
+		expect(newGame).to.be.an("object");
+		return done();
+	});
+
+	it("game should have the correct state", (done) => {
+		expect(newGame.state).to.equal("waiting");
+		return done();
+	});
+});
+
+describe("Game Model - Ready Check [Full]", () => {
+	before(() => {
+		game = gameModel.newGame(4);
+		player = playerModel.newPlayer("Test");
+		// add an invalid player object at the end to simulate a player that left
+		game.players = [
+			player, player, player, player
+		];
+		newGame = gameModel.readyCheck(game);
+	});
+
+	it("game should be a valid object", (done) => {
+		expect(newGame).to.not.be.an("undefined");
+		expect(newGame).to.be.an("object");
+		return done();
+	});
+
+	it("game should have the correct state", (done) => {
+		expect(newGame.state).to.equal("passing");
+		return done();
+	});
+});

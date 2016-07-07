@@ -88,6 +88,9 @@ io.on("join", (ctx, data) => {
 		}
 		// store this in the session
 		session.setValue(player.socket, game.id);
+		// see if the game is ready to start
+		game = gameModel.readyCheck(game);
+		// save the game
 		game = yield db.saveGame(game);
 		if (game.error === true) {
 			// something went wrong during load
