@@ -39,7 +39,7 @@ export default StyleSheet.create({
     },
     "leftHand": {
         "position": "fixed",
-        "left": -35,
+        "left": -15,
         "top": 0,
         "height": "100%"
     },
@@ -60,7 +60,7 @@ export default StyleSheet.create({
     },
     "rightHand": {
         "position": "fixed",
-        "right": -35,
+        "right": -15,
         "top": 0,
         "height": "100%"
     },
@@ -74,65 +74,32 @@ export default StyleSheet.create({
         "alignItems": "center",
         "height": "100%"
     },
-    "bottomPlayArea": {
-        "position": "fixed",
-        "width": "100%",
-        "height": "100%",
-        "zIndex": 1
+    "innerPlayArea": {
+        "position": "fixed"
     },
-    "leftPlayArea": {
-        "position": "fixed",
-        "width": "100%",
-        "height": "100%",
-        "zIndex": 2
+    "innerPlayArea > div": {
+        "position": "absolute"
     },
-    "topPlayArea": {
-        "position": "fixed",
-        "width": "100%",
-        "height": "100%",
-        "zIndex": 3
-    },
-    "rightPlayArea": {
-        "position": "fixed",
-        "width": "100%",
-        "height": "100%",
-        "zIndex": 4
-    },
-    "bottomPlayCard": {
-        "display": "flex",
-        "alignItems": "center",
-        "justifyContent": "center",
-        "marginTop": 400
-    },
-    "leftPlayCard": {
+    "innerPlayArea > div:nth-child(2)": {
         "WebkitTransform": "rotate(90deg)",
         "MozTransform": "rotate(90deg)",
         "OTransform": "rotate(90deg)",
         "MsTransform": "rotate(90deg)",
-        "transform": "rotate(90deg)",
-        "display": "flex",
-        "alignItems": "center",
-        "justifyContent": "center",
-        "marginTop": 350,
-        "marginLeft": -100
+        "transform": "rotate(90deg)"
     },
-    "topPlayCard": {
-        "display": "flex",
-        "alignItems": "center",
-        "justifyContent": "center",
-        "marginTop": 300
+    "innerPlayArea > div:nth-child(3)": {
+        "WebkitTransform": "rotate(180deg)",
+        "MozTransform": "rotate(180deg)",
+        "OTransform": "rotate(180deg)",
+        "MsTransform": "rotate(180deg)",
+        "transform": "rotate(180deg)"
     },
-    "rightPlayCard": {
+    "innerPlayArea > div:nth-child(4)": {
         "WebkitTransform": "rotate(270deg)",
         "MozTransform": "rotate(270deg)",
         "OTransform": "rotate(270deg)",
         "MsTransform": "rotate(270deg)",
-        "transform": "rotate(270deg)",
-        "display": "flex",
-        "alignItems": "center",
-        "justifyContent": "center",
-        "marginTop": 350,
-        "marginRight": -100
+        "transform": "rotate(270deg)"
     },
     "playContainer": {
         "WebkitBoxShadow": "0px 0px 39px 2px rgba(0,0,0,0.75)",

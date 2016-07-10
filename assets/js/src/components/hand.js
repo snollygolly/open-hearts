@@ -11,12 +11,9 @@ const Hand = React.createClass({
   getInitialState: function() {
     return {
       hand: [],
-      maxHandWidth : window.innerWidth / 3.5
     };
   },
   componentWillMount: function() {
-    window.addEventListener('resize', this.handleResize);
-
     Emitter.on('playCard', this.playCard);
 
     this.setState({
@@ -24,12 +21,6 @@ const Hand = React.createClass({
     });
   },
   componentWillUnmount: function() {
-    window.removeEventListener('resize', this.handleResize);
-  },
-  handleResize: function(e) {
-    this.setState({
-      maxHandWidth: window.innerWidth / 3.5
-    });
   },
   loadHand: function() {
     const json = [
@@ -47,27 +38,25 @@ const Hand = React.createClass({
   render: function() {
     let cards = [],
         cardStyles,
-        cardCount = Object.keys(this.state.hand).length,
-        cardWidth = this.state.maxHandWidth / cardCount,
-        cardSign = cardWidth / 4;
+        cardCount = Object.keys(this.state.hand).length;
 
     if (this.state.hand !== null) {
       cards = this.state.hand.map((result) => {
-        var trans = "translateX(-" + ((result.key === 1) ? "0" : (((result.key - 1) * cardWidth) - cardSign * (result.key - 1))) + "px)";
+        var trans = "translateX(-" + ((result.key === 1) ? "0" : (((result.key - 1) * this.props.settings.maxCardWidth) - this.props.settings.signSize * (result.key - 1))) + "px)";
         cardStyles = {
             transform : trans,
             zIndex : result.key,
         };
-        return <Card key={ result.key } style={ cardStyles } name={ result.name } imgWidth={ cardWidth } />
+        return <Card key={ result.key } style={ cardStyles } name={ result.name } imgWidth={ this.props.settings.maxCardWidth } />
       });
     }
 
-    var handWidth = (cardCount - 1) * cardSign + cardWidth;
+    var handWidth = (cardCount - 1) * this.props.settings.signSize + this.props.settings.maxCardWidth;
     var innerStyle = {
       width : handWidth,
       display : "flex"
     };
-    
+
     return (
       <div className={ this.props.location + 'Cards' }>
         <div style = {innerStyle}>

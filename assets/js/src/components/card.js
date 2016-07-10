@@ -25,9 +25,9 @@ const Card = React.createClass({
     var imgStyle = {
         width : this.props.imgWidth
     }
-    
+
     return (
-      <div style = {this.props.style}>
+      <div style = {this.props.style} className = {this.props.className}>
         <img src={ this.state.card } style={ imgStyle }></img>
       </div>
     );
