@@ -45,9 +45,17 @@ app.use(function* error(next) {
 	try {
 		yield next;
 	} catch (err) {
-		this.status = err.status || 500;
-		this.body = err.message;
-		this.app.emit("error", err, this);
+		if (this.state.api === true) {
+			// if this was an API request, send the error back in a plain response
+			this.app.emit("error", err, this);
+			this.body = {error: true, message: String(err)};
+		} else {
+			// this wasn"t an API request, show the error page
+			this.app.emit("error", err, this);
+			yield this.render("error", {
+				dump: err
+			});
+		}
 	}
 });
 
