@@ -1,5 +1,6 @@
 YUI().use("node", function(Y) {
-	var lastCommand;
+	var lastCommand = [];
+	var commandCount;
 	var lastGameId;
 	var gamePlayers = [];
 	var dataObj;
@@ -182,11 +183,31 @@ YUI().use("node", function(Y) {
 		Y.one("body").setStyle("paddingBottom", Y.one("#in").get("offsetHeight"));
 		Y.one("#in").on("keydown", function(e) {
 			if (e.charCode === 13) {
-				lastCommand = $("#in").val();
+				lastCommand.push($("#in").val());
+				commandCount = lastCommand.length;
 				processCommand();
 			}
 			else if (e.charCode === 38) {
-				$("#in").val(lastCommand);
+				commandCount--;
+				if(commandCount < 0) {
+					commandCount = (lastCommand.length - 1);
+				}
+				$("#in").val(lastCommand[commandCount]);
+			}
+			else if (e.charCode === 40) {
+				commandCount++;
+				if (commandCount >= lastCommand.length){
+					commandCount = 0;
+				}
+				$("#in").val(lastCommand[commandCount]);
+			}
+			else if(e.charCode === 9) {
+				e.preventDefault();
+				for (var i = 0; i < COMMANDS.length; i++) {
+					if (COMMANDS[i].name.includes($("#in").val())) {
+						$("#in").val(COMMANDS[i].name);
+					}
+				}
 			}
 		});
 	});
