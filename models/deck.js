@@ -6,7 +6,7 @@
  *
  */
 
- const fullDeck = require("./data/cards.json");
+const fullDeck = require("./data/cards.json");
 
 module.exports = {
 	/**
